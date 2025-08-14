@@ -1,117 +1,115 @@
-// server.js - Backend para a loja Artefatos Geek
-
-// Importa as bibliotecas necessárias
 const express = require('express');
 const cors = require('cors');
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
+const admin = require('firebase-admin');
+const fs = require('fs');
+const path = require('path');
 
-// Inicializa o Express
+// Inicialização do Express
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-// Middleware para permitir requisições de diferentes origens (importante para o frontend)
-app.use(cors());
-// Middleware para processar JSON nas requisições
+// Middleware para processar JSON e habilitar CORS
 app.use(express.json());
+app.use(cors());
 
-// --- Configuração do Firebase Admin e Firestore ---
-// As variáveis globais __app_id e __firebase_config são fornecidas pelo ambiente
-const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+// Variável para armazenar o carrinho
+let cart = { items: [] };
 
-// Verifica se a configuração do Firebase é válida
-if (!firebaseConfig.privateKey) {
-  console.error("Firebase Admin SDK credentials are not configured. The backend will not be able to connect to Firestore.");
-  // Em um ambiente de produção real, você encerraria a aplicação aqui.
-} else {
-  // Inicializa o Firebase Admin SDK
-  initializeApp({
-    credential: cert(firebaseConfig)
-  });
-
-  // Obtém uma instância do Firestore
-  const db = getFirestore();
-
-  // Define o caminho da coleção para os produtos e o carrinho
-  // Usamos o __app_id para garantir que os dados sejam isolados para esta aplicação
-  const productsCollectionPath = `/artifacts/${appId}/public/data/products`;
-  const cartCollectionPath = `/artifacts/${appId}/public/data/cart`;
-
-  // --- Rotas da API ---
-
-  // Rota para obter todos os produtos
-  // Exemplo de uso no frontend: fetch('/api/products')
-  app.get('/api/products', async (req, res) => {
-    try {
-      const productsRef = db.collection(productsCollectionPath);
-      const snapshot = await productsRef.get();
-      
-      if (snapshot.empty) {
-        console.log('Nenhum produto encontrado.');
-        return res.status(404).json({ message: 'Nenhum produto encontrado.' });
-      }
-
-      const products = [];
-      snapshot.forEach(doc => {
-        products.push({ id: doc.id, ...doc.data() });
-      });
-
-      res.status(200).json(products);
-    } catch (error) {
-      console.error('Erro ao buscar produtos:', error);
-      res.status(500).json({ message: 'Erro interno do servidor.' });
-    }
-  });
-
-  // Rota para adicionar um novo produto (exemplo, para popular o banco de dados)
-  // Exemplo de uso: POST para '/api/products' com um JSON do produto no corpo
-  app.post('/api/products', async (req, res) => {
-    try {
-      const productData = req.body;
-      const productsRef = db.collection(productsCollectionPath);
-      const newProductRef = await productsRef.add(productData);
-      res.status(201).json({ id: newProductRef.id, ...productData });
-    } catch (error) {
-      console.error('Erro ao adicionar produto:', error);
-      res.status(500).json({ message: 'Erro interno do servidor.' });
-    }
-  });
-
-  // Rota para obter o carrinho (neste exemplo, um único carrinho para todos os usuários)
-  app.get('/api/cart', async (req, res) => {
-    try {
-      // Como não temos autenticação, usamos um ID de carrinho estático para demonstração
-      const cartDocRef = db.collection(cartCollectionPath).doc('userCart');
-      const doc = await cartDocRef.get();
-      
-      if (!doc.exists) {
-        return res.status(200).json({ items: [] });
-      }
-
-      res.status(200).json(doc.data());
-    } catch (error) {
-      console.error('Erro ao buscar o carrinho:', error);
-      res.status(500).json({ message: 'Erro interno do servidor.' });
-    }
-  });
-
-  // Rota para atualizar o carrinho
-  app.post('/api/cart', async (req, res) => {
-    try {
-      const { items } = req.body;
-      // Atualiza o documento do carrinho com os novos itens
-      const cartDocRef = db.collection(cartCollectionPath).doc('userCart');
-      await cartDocRef.set({ items });
-      res.status(200).json({ message: 'Carrinho atualizado com sucesso.' });
-    } catch (error) {
-      console.error('Erro ao atualizar o carrinho:', error);
-      res.status(500).json({ message: 'Erro interno do servidor.' });
-    }
-  });
+// Tenta inicializar o Firebase Admin SDK com a chave de conta de serviço
+let serviceAccount;
+try {
+  const serviceAccountPath = path.join(__dirname, 'serviceAccountKey.json');
+  if (fs.existsSync(serviceAccountPath)) {
+    serviceAccount = require(serviceAccountPath);
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+    console.log('Firebase Admin SDK inicializado com sucesso.');
+  } else {
+    console.error('ERRO: O arquivo serviceAccountKey.json não foi encontrado.');
+    console.error('O backend não poderá se conectar ao Firestore.');
+    // Se o arquivo não existe, a aplicação continuará, mas sem o Firestore
+  }
+} catch (error) {
+  console.error('Erro ao inicializar o Firebase Admin SDK:', error);
 }
 
+// Inicializa o Firestore se o SDK foi inicializado
+const db = admin.firestore ? admin.firestore() : null;
+let productsCollectionRef = null;
+if (db) {
+  productsCollectionRef = db.collection('products');
+}
+
+/**
+ * Endpoint para obter todos os produtos.
+ */
+app.get('/api/products', async (req, res) => {
+  if (!productsCollectionRef) {
+    return res.status(500).json({ error: 'Firestore não está configurado.' });
+  }
+
+  try {
+    const snapshot = await productsCollectionRef.get();
+    const products = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    res.json(products);
+  } catch (error) {
+    console.error("Erro ao obter produtos: ", error);
+    res.status(500).json({ error: 'Erro interno do servidor.' });
+  }
+});
+
+/**
+ * Endpoint para adicionar um novo produto.
+ */
+app.post('/api/products', async (req, res) => {
+  if (!productsCollectionRef) {
+    return res.status(500).json({ error: 'Firestore não está configurado.' });
+  }
+
+  const { name, price, image } = req.body;
+  if (!name || !price) {
+    return res.status(400).json({ error: 'Nome e preço são obrigatórios.' });
+  }
+
+  const newProduct = {
+    name,
+    price: parseFloat(price),
+    image: image || 'https://placehold.co/600x400/E5E7EB/4B5563?text=Novo+Produto',
+    createdAt: admin.firestore.FieldValue.serverTimestamp() // Adiciona um timestamp
+  };
+
+  try {
+    const docRef = await productsCollectionRef.add(newProduct);
+    res.status(201).json({ id: docRef.id, ...newProduct });
+  } catch (error) {
+    console.error("Erro ao adicionar produto: ", error);
+    res.status(500).json({ error: 'Erro interno do servidor.' });
+  }
+});
+
+/**
+ * Endpoint para obter os itens do carrinho.
+ */
+app.get('/api/cart', (req, res) => {
+  res.json(cart);
+});
+
+/**
+ * Endpoint para atualizar o carrinho.
+ */
+app.post('/api/cart', (req, res) => {
+  // Apenas aceita o objeto de carrinho completo
+  const newCart = req.body;
+  if (newCart && newCart.items) {
+    cart = newCart;
+    res.status(200).json({ message: 'Carrinho atualizado com sucesso.' });
+  } else {
+    res.status(400).json({ error: 'Formato do carrinho inválido.' });
+  }
+});
+
 // Inicia o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
