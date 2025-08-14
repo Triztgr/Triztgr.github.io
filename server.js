@@ -17,6 +17,7 @@ let cart = { items: [] };
 
 // Tenta inicializar o Firebase Admin SDK com a chave de conta de serviço
 let serviceAccount;
+let isFirebaseInitialized = false; // Nova variável para rastrear o estado
 try {
   const serviceAccountPath = path.join(__dirname, 'serviceAccountKey.json');
   if (fs.existsSync(serviceAccountPath)) {
@@ -24,6 +25,7 @@ try {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
     });
+    isFirebaseInitialized = true; // Define como true se a inicialização for bem-sucedida
     console.log('Firebase Admin SDK inicializado com sucesso.');
   } else {
     console.error('ERRO: O arquivo serviceAccountKey.json não foi encontrado.');
@@ -32,12 +34,14 @@ try {
   }
 } catch (error) {
   console.error('Erro ao inicializar o Firebase Admin SDK:', error);
+  console.error('Verifique o conteúdo do seu arquivo serviceAccountKey.json.');
 }
 
 // Inicializa o Firestore se o SDK foi inicializado
-const db = admin.firestore ? admin.firestore() : null;
+let db = null;
 let productsCollectionRef = null;
-if (db) {
+if (isFirebaseInitialized) {
+  db = admin.firestore();
   productsCollectionRef = db.collection('products');
 }
 
@@ -46,7 +50,7 @@ if (db) {
  */
 app.get('/api/products', async (req, res) => {
   if (!productsCollectionRef) {
-    return res.status(500).json({ error: 'Firestore não está configurado.' });
+    return res.status(500).json({ error: 'Firestore não está configurado. Verifique se o serviceAccountKey.json está correto.' });
   }
 
   try {
@@ -64,7 +68,7 @@ app.get('/api/products', async (req, res) => {
  */
 app.post('/api/products', async (req, res) => {
   if (!productsCollectionRef) {
-    return res.status(500).json({ error: 'Firestore não está configurado.' });
+    return res.status(500).json({ error: 'Firestore não está configurado. Verifique se o serviceAccountKey.json está correto.' });
   }
 
   const { name, price, image } = req.body;
