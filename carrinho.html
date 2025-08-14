@@ -25,6 +25,8 @@
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
+            
+            <!-- Mobile and Desktop Cart Icon -->
             <div class="flex items-center space-x-4">
                 <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -33,6 +35,8 @@
                     <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
                 </a>
             </div>
+
+            <!-- Desktop Navigation Links -->
             <ul class="hidden md:flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
                 <li><a href="index.html#about-section" class="hover:text-purple-300-custom transition-colors duration-200">Sobre Nós</a></li>
@@ -79,68 +83,57 @@
     </footer>
 
     <script>
-        // URL base do seu servidor backend.
-        const API_BASE_URL = 'http://localhost:3000/api';
-
         // Elementos do DOM
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalSpan = document.getElementById('cart-total');
         const cartItemCountSpan = document.getElementById('cart-item-count');
 
-        // Variável global para armazenar os itens do carrinho
-        let cart = [];
-
         /**
-         * Salva o carrinho no backend.
+         * Salva o carrinho no localStorage.
+         * @param {Array} cartData O array de itens do carrinho.
          */
-        const saveCart = async () => {
-            await fetch(`${API_BASE_URL}/cart`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ items: cart })
-            });
+        const saveCart = (cartData) => {
+            localStorage.setItem('cart', JSON.stringify(cartData));
             updateCartItemCount();
         };
 
         /**
-         * Remove um item do carrinho e atualiza o backend.
+         * Remove um item do carrinho.
          * @param {string} productId O ID do produto a ser removido.
          */
-        const removeItem = async (productId) => {
+        const removeItem = (productId) => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             cart = cart.filter(item => item.id !== productId);
-            await saveCart();
+            saveCart(cart);
             renderCart();
         };
 
         /**
-         * Atualiza a quantidade de um item no carrinho e no backend.
+         * Atualiza a quantidade de um item no carrinho.
          * @param {string} productId O ID do produto.
          * @param {number} newQuantity A nova quantidade.
          */
-        const updateQuantity = async (productId, newQuantity) => {
+        const updateQuantity = (productId, newQuantity) => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const item = cart.find(item => item.id === productId);
             if (item) {
                 item.quantity = newQuantity;
                 if (item.quantity <= 0) {
-                    await removeItem(productId);
+                    removeItem(productId);
                 } else {
-                    await saveCart();
+                    saveCart(cart);
+                    renderCart();
                 }
-                renderCart();
             }
         };
 
         /**
-         * Atualiza o contador de itens na barra de navegação, buscando do backend.
+         * Atualiza o contador de itens na barra de navegação, lendo do localStorage.
          */
-        const updateCartItemCount = async () => {
-            const response = await fetch(`${API_BASE_URL}/cart`);
-            const cartData = await response.json();
-            const currentCart = cartData.items || [];
+        const updateCartItemCount = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
             
-            const totalItems = currentCart.reduce((total, item) => total + item.quantity, 0);
             if (totalItems > 0) {
                 cartItemCountSpan.textContent = totalItems;
                 cartItemCountSpan.classList.remove('hidden');
@@ -150,78 +143,70 @@
         };
 
         /**
-         * Renderiza o conteúdo do carrinho, buscando os dados do backend.
+         * Renderiza o conteúdo do carrinho, lendo os dados do localStorage.
          */
-        const renderCart = async () => {
-            cartItemsContainer.innerHTML = '<p class="text-center">Carregando carrinho...</p>';
-            try {
-                const response = await fetch(`${API_BASE_URL}/cart`);
-                const cartData = await response.json();
-                cart = cartData.items || [];
-
-                cartItemsContainer.innerHTML = '';
-                let total = 0;
-                if (cart.length > 0) {
-                    cart.forEach(item => {
-                        const subtotal = item.price * item.quantity;
-                        total += subtotal;
-                        const itemElement = document.createElement('div');
-                        itemElement.classList.add('flex', 'flex-col', 'md:flex-row', 'items-center', 'justify-between', 'py-4', 'border-b');
-                        itemElement.innerHTML = `
-                            <div class="flex items-center mb-4 md:mb-0">
-                                <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-lg mr-4 object-cover">
-                                <div>
-                                    <h4 class="font-semibold text-gray-900">${item.name}</h4>
-                                    <p class="text-lg text-purple-700-custom font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
-                                </div>
+        const renderCart = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const subtotal = item.price * item.quantity;
+                    total += subtotal;
+                    const itemElement = document.createElement('div');
+                    itemElement.classList.add('flex', 'flex-col', 'md:flex-row', 'items-center', 'justify-between', 'py-4', 'border-b');
+                    itemElement.innerHTML = `
+                        <div class="flex items-center mb-4 md:mb-0">
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-lg mr-4 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                                <p class="text-lg text-purple-700-custom font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
                             </div>
-                            <div class="flex items-center space-x-4">
-                                <div class="flex items-center">
-                                    <button data-id="${item.id}" class="decrease-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">-</button>
-                                    <span class="font-semibold w-8 text-center">${item.quantity}</span>
-                                    <button data-id="${item.id}" class="increase-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">+</button>
-                                </div>
-                                <span class="text-lg font-semibold text-gray-900">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
-                                <button data-id="${item.id}" class="remove-item-btn ml-2 text-red-500 hover:text-red-700">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1 12-14-1-1-12zm-3 0V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3m2 0h8"></path>
-                                    </svg>
-                                </button>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <button data-id="${item.id}" class="decrease-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">-</button>
+                                <span class="font-semibold w-8 text-center">${item.quantity}</span>
+                                <button data-id="${item.id}" class="increase-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">+</button>
                             </div>
-                        `;
-                        cartItemsContainer.appendChild(itemElement);
-                    });
+                            <span class="text-lg font-semibold text-gray-900">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
+                            <button data-id="${item.id}" class="remove-item-btn ml-2 text-red-500 hover:text-red-700">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1 12-14-1-1-12zm-3 0V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3m2 0h8"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemElement);
+                });
 
-                    // Adiciona event listeners aos botões do carrinho
-                    document.querySelectorAll('.increase-qty-btn').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const productId = e.target.dataset.id;
-                            const item = cart.find(i => i.id === productId);
-                            if (item) updateQuantity(productId, item.quantity + 1);
-                        });
+                // Adiciona event listeners aos botões do carrinho
+                document.querySelectorAll('.increase-qty-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = e.target.dataset.id;
+                        const item = cart.find(i => i.id === productId);
+                        if (item) updateQuantity(productId, item.quantity + 1);
                     });
-                    document.querySelectorAll('.decrease-qty-btn').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const productId = e.target.dataset.id;
-                            const item = cart.find(i => i.id === productId);
-                            if (item) updateQuantity(productId, item.quantity - 1);
-                        });
+                });
+                document.querySelectorAll('.decrease-qty-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = e.target.dataset.id;
+                        const item = cart.find(i => i.id === productId);
+                        if (item) updateQuantity(productId, item.quantity - 1);
                     });
-                    document.querySelectorAll('.remove-item-btn').forEach(button => {
-                        button.addEventListener('click', (e) => {
-                            const productId = e.currentTarget.dataset.id;
-                            removeItem(productId);
-                        });
+                });
+                document.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const productId = e.currentTarget.dataset.id;
+                        removeItem(productId);
                     });
-                } else {
-                    cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center text-lg mt-8">Seu carrinho está vazio.</p>`;
-                }
-                
-                cartTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            } catch (error) {
-                console.error('Erro ao carregar o carrinho:', error);
-                cartItemsContainer.innerHTML = '<p class="text-center text-red-500">Erro ao carregar o carrinho. Verifique se o servidor backend está rodando.</p>';
+                });
+            } else {
+                cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center text-lg mt-8">Seu carrinho está vazio.</p>`;
             }
+            
+            cartTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
         };
 
         // Inicializa a página do carrinho
