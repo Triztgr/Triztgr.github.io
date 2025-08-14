@@ -1,206 +1,91 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artefatos Geek - Carrinho</title>
+    <title>Carrinho de Compras - Artefatos Geek</title>
+    <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos personalizados, mantendo a consistência do tema */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f7fafc; /* cor de fundo cinza claro */
         }
-        /* Custom CSS para a barra de navegação e cores roxas */
-        .bg-purple-900-custom {
-            background-color: #3b0764;
-        }
-        .text-purple-300-custom {
-            color: #d1b8e4;
-        }
-        .hover\:text-purple-300-custom:hover {
-            color: #d1b8e4;
-        }
-        
-        .cart-sidebar {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            max-width: 400px;
-            height: 100%;
-            background-color: white;
-            box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 100;
-        }
-
-        .cart-sidebar.open {
-            transform: translateX(0);
-        }
-        
-        .backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 99;
-            display: none;
-        }
-
-        .backdrop.open {
-            display: block;
-        }
-
-        /* Mobile menu styles */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            max-width: 300px;
-            height: 100%;
-            background-color: #4a215b;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 101;
-        }
-        .mobile-menu.open {
-            transform: translateX(0);
-        }
+        .bg-purple-900-custom { background-color: #3b0764; }
+        .bg-purple-700-custom { background-color: #6b21a8; }
+        .text-purple-300-custom { color: #d8b4fe; }
+        .text-purple-500-custom { color: #a855f7; }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 text-gray-800">
 
-    <!-- Navbar (Menu de Navegação) -->
+    <!-- Navbar (Menu de Navegação) - Mantém a mesma estrutura do index.html -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
-            
-            <!-- Mobile Menu Button (Hamburger) -->
-            <button id="mobile-menu-button" class="md:hidden text-white hover:text-purple-300-custom transition-colors duration-200">
-                <!-- Hamburger icon -->
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
-
-            <!-- Desktop Navigation Links -->
-            <div class="hidden md:flex items-center space-x-6">
-                <ul class="flex space-x-6">
-                    <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
-                    <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200">Produtos</a></li>
-                    <li><a href="contato.html" class="hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
-                    <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-                </ul>
-                <button id="cart-button" class="flex items-center hover:text-purple-300-custom transition-colors duration-200">
-                    <!-- Ícone de carrinho - SVG -->
+            <div class="flex items-center space-x-4">
+                <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
-                    <span id="cart-item-count" class="ml-1 text-xs font-bold bg-red-500 text-white rounded-full px-2 py-0.5 hidden">0</span>
+                    <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
+                </a>
+            </div>
+            <ul class="hidden md:flex items-center space-x-6">
+                <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
+                <li><a href="index.html#about-section" class="hover:text-purple-300-custom transition-colors duration-200">Sobre Nós</a></li>
+                <li><a href="index.html#contact-section" class="hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
+                <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+                <li><a href="carrinho.html" class="text-purple-300-custom">Carrinho</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Seção do Carrinho de Compras -->
+    <main class="container mx-auto py-12 px-4">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Seu Carrinho</h2>
+            
+            <div id="cart-items" class="border-b pb-4 mb-4">
+                <!-- Itens do carrinho serão inseridos aqui via JS -->
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <span class="text-2xl font-bold">Total:</span>
+                <span id="cart-total" class="text-2xl font-bold text-purple-700-custom">R$ 0,00</span>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <button class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
+                    Finalizar Compra
                 </button>
             </div>
         </div>
-    </nav>
-    
-    <!-- Mobile Menu (oculto por padrão) -->
-    <div id="mobile-menu" class="mobile-menu p-4 text-white">
-        <div class="flex justify-end mb-4">
-            <button id="close-mobile-menu-button" class="text-white hover:text-purple-300-custom">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        <ul class="space-y-4 text-lg">
-            <li><a href="index.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
-            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Produtos</a></li>
-            <li><a href="contato.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
-            <li><a href="login.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-        </ul>
-    </div>
-
-    <!-- Backdrop para o carrinho e menu mobile -->
-    <div id="cart-backdrop" class="backdrop"></div>
-
-    <!-- Carrinho de Compras (Sidebar) -->
-    <div id="cart-sidebar" class="cart-sidebar flex flex-col">
-        <div class="flex justify-between items-center p-4 border-b">
-            <h2 class="text-xl font-bold">Seu Carrinho</h2>
-            <button id="close-cart-button" class="text-gray-500 hover:text-gray-800">
-                <!-- Ícone de fechar - SVG -->
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        <div id="cart-items" class="flex-grow p-4 overflow-y-auto">
-            <!-- Itens do carrinho serão inseridos aqui via JS -->
-            <p id="empty-cart-message" class="text-gray-500 text-center mt-8">Seu carrinho está vazio.</p>
-        </div>
-        <div class="p-4 border-t">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-bold">Total:</span>
-                <span id="cart-total" class="text-lg font-bold">R$ 0,00</span>
-            </div>
-            <button class="w-full bg-purple-600 text-white py-3 rounded-md font-semibold hover:bg-purple-700 transition-colors duration-200">
-                Finalizar Compra
-            </button>
-        </div>
-    </div>
-
-    <!-- Conteúdo da Loja (Produtos) -->
-    <main class="container mx-auto mt-8 p-4">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Nossos Produtos</h2>
-        <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Cards de produto serão inseridos aqui via JS -->
-        </div>
     </main>
 
+    <!-- Rodapé (Footer) - Mantém a mesma estrutura do index.html -->
+    <footer class="bg-purple-900-custom text-purple-300-custom py-6 mt-12">
+        <div class="container mx-auto text-center">
+            <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-6 mb-2">
+                <a href="index.html" class="hover:underline">Início</a>
+                <a href="index.html#about-section" class="hover:underline">Sobre Nós</a>
+                <a href="index.html#contact-section" class="hover:underline">Contato</a>
+            </div>
+            <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
+            <p class="mt-2">Criado por Beatriz Garcia</p>
+        </div>
+    </footer>
+
     <script>
-        // Dados de produtos mock (simulados)
-        const products = [
-            { id: 1, name: 'Espada de Mithril', price: 150.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Espada+de+Mithril' },
-            { id: 2, name: 'Capa da Invisibilidade', price: 250.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Capa+da+Invisibilidade' },
-            { id: 3, name: 'Anel do Poder', price: 500.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Anel+do+Poder' },
-            { id: 4, name: 'Varinha Mágica', price: 99.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Varinha+Magica' },
-            { id: 5, name: 'Poção de Cura', price: 25.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Pocao+de+Cura' },
-            { id: 6, name: 'Mapa do Maroto', price: 75.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Mapa+do+Maroto' },
-            { id: 7, name: 'Sabre de Luz', price: 300.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Sabre+de+Luz' },
-            { id: 8, name: 'Escudo do Capitão', price: 400.00, image: 'https://placehold.co/400x400/808080/FFFFFF?text=Escudo+do+Capitao' },
-        ];
-
-        // Estado do carrinho de compras
-        let cart = [];
-
         // Elementos do DOM
-        const productsContainer = document.getElementById('products-container');
-        const cartSidebar = document.getElementById('cart-sidebar');
-        const cartButton = document.getElementById('cart-button');
-        const closeCartButton = document.getElementById('close-cart-button');
-        const cartBackdrop = document.getElementById('cart-backdrop');
         const cartItemsContainer = document.getElementById('cart-items');
         const cartTotalSpan = document.getElementById('cart-total');
         const cartItemCountSpan = document.getElementById('cart-item-count');
-        const emptyCartMessage = document.getElementById('empty-cart-message');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
 
-        /**
-         * Carrega o carrinho do localStorage.
-         */
-        const loadCart = () => {
-            const savedCart = localStorage.getItem('shoppingCart');
-            if (savedCart) {
-                cart = JSON.parse(savedCart);
-                renderCart();
-            }
-        };
+        // Carrega o carrinho do localStorage
+        let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
 
         /**
          * Salva o carrinho no localStorage.
@@ -208,70 +93,6 @@
         const saveCart = () => {
             localStorage.setItem('shoppingCart', JSON.stringify(cart));
             updateCartItemCount();
-        };
-
-        /**
-         * Atualiza o contador de itens no carrinho.
-         */
-        const updateCartItemCount = () => {
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            if (totalItems > 0) {
-                cartItemCountSpan.textContent = totalItems;
-                cartItemCountSpan.classList.remove('hidden');
-            } else {
-                cartItemCountSpan.classList.add('hidden');
-            }
-        };
-
-        /**
-         * Renderiza os produtos na página.
-         */
-        const renderProducts = () => {
-            productsContainer.innerHTML = '';
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-md', 'overflow-hidden', 'transform', 'hover:scale-105', 'transition-transform', 'duration-200');
-                productCard.innerHTML = `
-                    <img class="w-full h-48 object-cover" src="${product.image}" alt="${product.name}">
-                    <div class="p-4">
-                        <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
-                        <p class="text-purple-600 font-bold mt-1">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
-                        <button data-id="${product.id}" class="add-to-cart-btn w-full mt-4 bg-purple-600 text-white py-2 rounded-md font-semibold hover:bg-purple-700 transition-colors duration-200">
-                            Adicionar ao Carrinho
-                        </button>
-                    </div>
-                `;
-                productsContainer.appendChild(productCard);
-            });
-
-            // Adiciona event listeners aos botões "Adicionar ao Carrinho"
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = parseInt(e.target.dataset.id);
-                    addToCart(productId);
-                });
-            });
-        };
-
-        /**
-         * Adiciona um produto ao carrinho.
-         * @param {number} productId O ID do produto a ser adicionado.
-         */
-        const addToCart = (productId) => {
-            const product = products.find(p => p.id === productId);
-            const cartItem = cart.find(item => item.id === productId);
-            if (product) {
-                if (cartItem) {
-                    cartItem.quantity += 1;
-                } else {
-                    cart.push({ ...product, quantity: 1 });
-                }
-                saveCart();
-                renderCart();
-                // Abre o carrinho após adicionar um item
-                cartSidebar.classList.add('open');
-                cartBackdrop.classList.add('open');
-            }
         };
 
         /**
@@ -302,30 +123,47 @@
         };
 
         /**
+         * Atualiza o contador de itens no carrinho.
+         */
+        const updateCartItemCount = () => {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            if (totalItems > 0) {
+                cartItemCountSpan.textContent = totalItems;
+                cartItemCountSpan.classList.remove('hidden');
+            } else {
+                cartItemCountSpan.classList.add('hidden');
+            }
+        };
+
+        /**
          * Renderiza o conteúdo do carrinho.
          */
         const renderCart = () => {
             cartItemsContainer.innerHTML = '';
             let total = 0;
             if (cart.length > 0) {
-                emptyCartMessage.classList.add('hidden');
                 cart.forEach(item => {
-                    total += item.price * item.quantity;
+                    const subtotal = item.price * item.quantity;
+                    total += subtotal;
                     const itemElement = document.createElement('div');
-                    itemElement.classList.add('flex', 'items-center', 'mb-4', 'border-b', 'pb-4');
+                    itemElement.classList.add('flex', 'flex-col', 'md:flex-row', 'items-center', 'justify-between', 'py-4', 'border-b');
                     itemElement.innerHTML = `
-                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-lg mr-4 object-cover">
-                        <div class="flex-grow">
-                            <h4 class="font-semibold text-gray-800">${item.name}</h4>
-                            <p class="text-sm text-gray-600">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                        <div class="flex items-center mb-4 md:mb-0">
+                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-lg mr-4 object-cover">
+                            <div>
+                                <h4 class="font-semibold text-gray-900">${item.name}</h4>
+                                <p class="text-lg text-purple-700-custom font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <button data-id="${item.id}" class="decrease-qty-btn bg-gray-200 text-gray-700 px-2 rounded-md hover:bg-gray-300">-</button>
-                            <span class="font-semibold w-6 text-center">${item.quantity}</span>
-                            <button data-id="${item.id}" class="increase-qty-btn bg-gray-200 text-gray-700 px-2 rounded-md hover:bg-gray-300">+</button>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center">
+                                <button data-id="${item.id}" class="decrease-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">-</button>
+                                <span class="font-semibold w-8 text-center">${item.quantity}</span>
+                                <button data-id="${item.id}" class="increase-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">+</button>
+                            </div>
+                            <span class="text-lg font-semibold text-gray-900">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
                             <button data-id="${item.id}" class="remove-item-btn ml-2 text-red-500 hover:text-red-700">
-                                <!-- Ícone de lixeira - SVG -->
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1 12-14-1-1-12zm-3 0V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3m2 0h8"></path>
                                 </svg>
                             </button>
@@ -342,7 +180,6 @@
                         if (item) updateQuantity(productId, item.quantity + 1);
                     });
                 });
-
                 document.querySelectorAll('.decrease-qty-btn').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const productId = parseInt(e.target.dataset.id);
@@ -350,7 +187,6 @@
                         if (item) updateQuantity(productId, item.quantity - 1);
                     });
                 });
-
                 document.querySelectorAll('.remove-item-btn').forEach(button => {
                     button.addEventListener('click', (e) => {
                         const productId = parseInt(e.currentTarget.dataset.id);
@@ -358,48 +194,17 @@
                     });
                 });
             } else {
-                emptyCartMessage.classList.remove('hidden');
+                cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center text-lg mt-8">Seu carrinho está vazio.</p>`;
             }
             
             cartTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
             updateCartItemCount();
         };
 
-        // Event listeners para abrir/fechar o carrinho
-        cartButton.addEventListener('click', () => {
-            cartSidebar.classList.add('open');
-            cartBackdrop.classList.add('open');
-        });
-
-        closeCartButton.addEventListener('click', () => {
-            cartSidebar.classList.remove('open');
-            cartBackdrop.classList.remove('open');
-        });
-
-        cartBackdrop.addEventListener('click', () => {
-            cartSidebar.classList.remove('open');
-            cartBackdrop.classList.remove('open');
-            mobileMenu.classList.remove('open'); // Fecha o menu móvel se o pano de fundo for clicado
-        });
-        
-        // Event listeners para o menu móvel
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.add('open');
-            cartBackdrop.classList.add('open');
-        });
-
-        closeMobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-            cartBackdrop.classList.remove('open');
-        });
-
-        // Inicializa a aplicação
+        // Inicializa a página do carrinho
         window.onload = () => {
-            loadCart();
-            renderProducts();
+            renderCart();
         };
-
     </script>
-
 </body>
 </html>

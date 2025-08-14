@@ -91,12 +91,13 @@
     <div class="container mx-auto flex justify-between items-center">
         <a href="#" class="text-2xl font-bold text-purple-300-custom" onclick="showPage('home')">Artefatos Geek</a>
         
-        <!-- Mobile Menu Button (Hamburger) -->
+        <!-- Mobile Menu Button and Cart Button -->
         <div class="flex items-center space-x-4">
-            <a href="carrinho.html" class="md:hidden text-white hover:text-gray-300">
+            <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
+                <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
             </a>
             <button id="mobile-menu-button" class="md:hidden text-white hover:text-purple-300-custom transition-colors duration-200">
                 <!-- Hamburger icon -->
@@ -144,7 +145,7 @@
             <!-- Overlay para melhorar a legibilidade do texto sobre a imagem -->
             <div class="absolute inset-0 bg-purple-900-custom bg-opacity-70"></div>
             <div class="relative z-10 text-center text-white">
-                <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
+                <img src="https://placehold.co/100x100/3b0764/d8b4fe?text=Logo" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
                 <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
             </div>
@@ -154,59 +155,8 @@
             <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Nossos Produtos</h2>
             
             <!-- Grid de produtos responsivo -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Produto 1: Teclado Mecânico -->
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Teclado+Mecânico" alt="Teclado Mecânico RGB" class="w-full h-48 object-cover">
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Teclado Mecânico RGB</h3>
-                        <p class="text-gray-600 text-sm mb-4">Perfeito para gamers e programadores.</p>
-                        <span class="text-2xl font-bold text-purple-700-custom">R$ 350,00</span>
-                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
-                            Comprar
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Produto 2: Mouse Gamer -->
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Mouse+Gamer" alt="Mouse Gamer Sem Fio" class="w-full h-48 object-cover">
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Mouse Gamer Sem Fio</h3>
-                        <p class="text-gray-600 text-sm mb-4">Precisão e velocidade para suas partidas.</p>
-                        <span class="text-2xl font-bold text-purple-700-custom">R$ 180,00</span>
-                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
-                            Comprar
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Produto 3: Headset com Microfone -->
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Headset+Gamer" alt="Headset Gamer com Microfone" class="w-full h-48 object-cover">
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Headset Gamer</h3>
-                        <p class="text-gray-600 text-sm mb-4">Som imersivo para seus jogos.</p>
-                        <span class="text-2xl font-bold text-purple-700-custom">R$ 250,00</span>
-                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
-                            Comprar
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Produto 4: Controle Sem Fio -->
-                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Controle+Sem+Fio" alt="Controle Sem Fio para PC/Console" class="w-full h-48 object-cover">
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Controle Sem Fio</h3>
-                        <p class="text-gray-600 text-sm mb-4">Compatível com múltiplas plataformas.</p>
-                        <span class="text-2xl font-bold text-purple-700-custom">R$ 150,00</span>
-                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
-                            Comprar
-                        </button>
-                    </div>
-                </div>
-                
+            <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Os cards de produtos serão inseridos aqui via JavaScript -->
             </div>
         </main>
     </div>
@@ -271,49 +221,124 @@
     </footer>
 
     <script>
+        // Dados de produtos mock (simulados)
+        const products = [
+            { id: 1, name: 'Teclado Mecânico RGB', price: 350.00, image: 'https://placehold.co/600x400/E5E7EB/4B5563?text=Teclado+Mecânico' },
+            { id: 2, name: 'Mouse Gamer Sem Fio', price: 180.00, image: 'https://placehold.co/600x400/E5E7EB/4B5563?text=Mouse+Gamer' },
+            { id: 3, name: 'Headset Gamer', price: 250.00, image: 'https://placehold.co/600x400/E5E7EB/4B5563?text=Headset+Gamer' },
+            { id: 4, name: 'Controle Sem Fio', price: 150.00, image: 'https://placehold.co/600x400/E5E7EB/4B5563?text=Controle+Sem+Fio' },
+        ];
+
+        // Elementos do DOM
+        const productsContainer = document.getElementById('products-container');
+        const cartItemCountSpan = document.getElementById('cart-item-count');
+
+        /**
+         * Salva o carrinho no localStorage.
+         */
+        const saveCart = (cart) => {
+            localStorage.setItem('shoppingCart', JSON.stringify(cart));
+            updateCartItemCount();
+        };
+
+        /**
+         * Adiciona um produto ao carrinho e redireciona.
+         * @param {number} productId O ID do produto a ser adicionado.
+         */
+        const addToCart = (productId) => {
+            const product = products.find(p => p.id === productId);
+            let cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+            const cartItem = cart.find(item => item.id === productId);
+            if (product) {
+                if (cartItem) {
+                    cartItem.quantity += 1;
+                } else {
+                    cart.push({ ...product, quantity: 1 });
+                }
+                saveCart(cart);
+                window.location.href = 'carrinho.html'; // Redireciona para a página do carrinho
+            }
+        };
+
+        /**
+         * Atualiza o contador de itens no carrinho.
+         */
+        const updateCartItemCount = () => {
+            const cart = JSON.parse(localStorage.getItem('shoppingCart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            if (totalItems > 0) {
+                cartItemCountSpan.textContent = totalItems;
+                cartItemCountSpan.classList.remove('hidden');
+            } else {
+                cartItemCountSpan.classList.add('hidden');
+            }
+        };
+
+        /**
+         * Renderiza os produtos na página.
+         */
+        const renderProducts = () => {
+            productsContainer.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden');
+                productCard.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">${product.name}</h3>
+                        <p class="text-gray-600 text-sm mb-4">Perfeito para gamers e programadores.</p>
+                        <span class="text-2xl font-bold text-purple-700-custom">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
+                        <button data-id="${product.id}" class="add-to-cart-btn mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
+                            Comprar
+                        </button>
+                    </div>
+                `;
+                productsContainer.appendChild(productCard);
+            });
+
+            // Adiciona event listeners aos botões "Comprar"
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.dataset.id);
+                    addToCart(productId);
+                });
+            });
+        };
+        
         // Função para mostrar a página correta
         function showPage(pageId) {
-            // Esconde todas as seções
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.remove('active');
             });
-            // Mostra a seção desejada
             document.getElementById(pageId + '-section').classList.add('active');
-            // Fecha o menu móvel se estiver aberto
-            const mobileMenu = document.getElementById('mobile-menu');
-            const backdrop = document.getElementById('backdrop');
-            if (mobileMenu.classList.contains('open')) {
-                mobileMenu.classList.remove('open');
-                backdrop.classList.remove('open');
-            }
+            closeMobileMenu();
         }
-        
-        // Event listeners para o menu móvel
+
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const backdrop = document.getElementById('backdrop');
 
-        mobileMenuButton.addEventListener('click', () => {
+        const openMobileMenu = () => {
             mobileMenu.classList.add('open');
             backdrop.classList.add('open');
-        });
+        };
 
-        closeMobileMenuButton.addEventListener('click', () => {
+        const closeMobileMenu = () => {
             mobileMenu.classList.remove('open');
             backdrop.classList.remove('open');
-        });
+        };
 
-        backdrop.addEventListener('click', () => {
-            mobileMenu.classList.remove('open');
-            backdrop.classList.remove('open');
-        });
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+        backdrop.addEventListener('click', closeMobileMenu);
         
-        // Exibe a página inicial por padrão
+        // Inicializa a aplicação
         window.onload = () => {
+            renderProducts();
+            updateCartItemCount();
             showPage('home');
         };
     </script>
-
 </body>
 </html>
