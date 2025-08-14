@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artefatos Geek</title>
+    <!-- Inclui o Tailwind CSS para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define a fonte e cores personalizadas para o tema roxo */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+       
+        .bg-purple-900-custom {
+            background-color: #3b0764; 
+        }
+        .bg-purple-700-custom {
+            background-color: #6b21a8;
+        }
+        .text-purple-300-custom {
+            color: #d8b4fe; 
+        }
+        .text-purple-500-custom {
+            color: #a855f7; 
+        }
+
+        .header-bg {
+            background-image: url('https://placehold.co/1200x400/3b0764/d8b4fe?text=Capa+da+Página');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        @media (min-width: 768px) {
+             .header-bg {
+                background-image: url('imagens/wllp.png');
+             }
+        }
+        
+    
+        .page-section {
+            display: none;
+        }
+     
+        .page-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Navbar  -->
+    <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-purple-300-custom" onclick="showPage('home')">Artefatos Geek</a>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
+                <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('about')">Sobre Nós</a></li>
+                <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('contact')">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="home-section" class="page-section active">
+        <header class="header-bg relative h-64 md:h-96 flex items-center justify-center p-4">
+            
+            <div class="absolute inset-0 bg-purple-900-custom bg-opacity-70"></div>
+            <div class="relative z-10 text-center text-white">
+                <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-25 md:h-40 mx-auto rounded-lg">
+                <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
+                <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
+            </div>
+        </header>
+
+        <main class="container mx-auto py-12 px-4">
+            <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Nossos Produtos</h2>
+            
+           
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Teclado+Mecânico" alt="Teclado Mecânico RGB" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Teclado Mecânico RGB</h3>
+                        <p class="text-gray-600 text-sm mb-4">Perfeito para gamers e programadores.</p>
+                        <span class="text-2xl font-bold text-purple-700-custom">R$ 350,00</span>
+                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 2: Mouse Gamer -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Mouse+Gamer" alt="Mouse Gamer Sem Fio" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Mouse Gamer Sem Fio</h3>
+                        <p class="text-gray-600 text-sm mb-4">Precisão e velocidade para suas partidas.</p>
+                        <span class="text-2xl font-bold text-purple-700-custom">R$ 180,00</span>
+                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 3: Headset com Microfone -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Headset+Gamer" alt="Headset Gamer com Microfone" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Headset Gamer</h3>
+                        <p class="text-gray-600 text-sm mb-4">Som imersivo para seus jogos.</p>
+                        <span class="text-2xl font-bold text-purple-700-custom">R$ 250,00</span>
+                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Produto 4: Controle Sem Fio -->
+                <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+                    <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Controle+Sem+Fio" alt="Controle Sem Fio para PC/Console" class="w-full h-48 object-cover">
+                    <div class="p-6 text-center">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Controle Sem Fio</h3>
+                        <p class="text-gray-600 text-sm mb-4">Compatível com múltiplas plataformas.</p>
+                        <span class="text-2xl font-bold text-purple-700-custom">R$ 150,00</span>
+                        <button class="mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
+                            Comprar
+                        </button>
+                    </div>
+                </div>
+                
+            </div>
+        </main>
+    </div>
+
+    <!-- Seção "Sobre Nós" -->
+    <div id="about-section" class="page-section">
+        <main class="container mx-auto py-12 px-4">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-4xl font-bold text-center mb-6 text-purple-700-custom">Sobre Nós</h2>
+                <p class="text-gray-700 mb-4">
+                    A Artefatos Geek nasceu da paixão por tecnologia, jogos e inovação. Nosso objetivo é trazer os melhores produtos do universo geek, de periféricos de alta performance a itens de colecionador exclusivos. Acreditamos que a tecnologia deve ser acessível e inspiradora para todos.
+                </p>
+                <p class="text-gray-700">
+                    Nossa equipe é formada por entusiastas que testam e selecionam cada produto com o máximo de cuidado, garantindo a qualidade e a satisfação dos nossos clientes.
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Seção "Contato" -->
+    <div id="contact-section" class="page-section">
+        <main class="container mx-auto py-12 px-4">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-4xl font-bold text-center mb-6 text-purple-700-custom">Fale Conosco</h2>
+                <p class="text-gray-700 mb-4 text-center">
+                    Tem alguma dúvida, sugestão ou precisa de suporte? Entre em contato conosco!
+                </p>
+                <form class="max-w-md mx-auto">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-bold mb-2">Nome</label>
+                        <input type="text" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                        <input type="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <div class="mb-4">
+                        <label for="message" class="block text-gray-700 font-bold mb-2">Mensagem</label>
+                        <textarea id="message" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <button type="submit" class="bg-purple-700-custom text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-800 transition-colors duration-300">
+                            Enviar Mensagem
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Rodapé (Footer) -->
+    <footer class="bg-purple-900-custom text-purple-300-custom py-6">
+        <div class="container mx-auto text-center">
+            <div class="flex justify-center space-x-6 mb-2">
+                <a href="#" class="hover:underline" onclick="showPage('home')">Início</a>
+                <a href="#" class="hover:underline" onclick="showPage('about')">Sobre Nós</a>
+                <a href="#" class="hover:underline" onclick="showPage('contact')">Contato</a>
+            </div>
+            <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
+            <p class="mt-2">Criado por Beatriz Garcia</p>
+        </div>
+    </footer>
+
+    <script>
+        // Função para mostrar a página correta
+        function showPage(pageId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Mostra a seção desejada
+            document.getElementById(pageId + '-section').classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
