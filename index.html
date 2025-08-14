@@ -6,6 +6,7 @@
     <title>Artefatos Geek</title>
     <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Define a fonte e cores personalizadas para o tema roxo */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -49,6 +50,38 @@
         .page-section.active {
             display: block;
         }
+
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #3b0764;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 101;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+        }
+
+        .backdrop.open {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -57,22 +90,61 @@
 <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
     <div class="container mx-auto flex justify-between items-center">
         <a href="#" class="text-2xl font-bold text-purple-300-custom" onclick="showPage('home')">Artefatos Geek</a>
-        <ul class="flex space-x-6">
+        
+        <!-- Mobile Menu Button (Hamburger) -->
+        <div class="flex items-center space-x-4">
+            <a href="carrinho.html" class="md:hidden text-white hover:text-gray-300">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                </svg>
+            </a>
+            <button id="mobile-menu-button" class="md:hidden text-white hover:text-purple-300-custom transition-colors duration-200">
+                <!-- Hamburger icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Desktop Navigation Links -->
+        <ul class="hidden md:flex items-center space-x-6">
             <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
             <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('about')">Sobre Nós</a></li>
             <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('contact')">Contato</a></li>
-            <li><a href="login.html" class="text-white hover:text-gray-300">Login</a></li>
-            <li><a href="carrinho.html" class="text-white hover:text-gray-300">Carrinho</a></li>
+            <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+            <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
         </ul>
     </div>
 </nav>
+
+    <!-- Mobile Menu (oculto por padrão) -->
+    <div id="mobile-menu" class="mobile-menu p-4 text-white">
+        <div class="flex justify-end mb-4">
+            <button id="close-mobile-menu-button" class="text-white hover:text-purple-300-custom">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="space-y-4 text-lg">
+            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
+            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('about')">Sobre Nós</a></li>
+            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('contact')">Contato</a></li>
+            <li><a href="login.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+            <li><a href="carrinho.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
+        </ul>
+    </div>
+
+    <!-- Backdrop para o menu mobile -->
+    <div id="backdrop" class="backdrop"></div>
+
     <!-- Seção de Produtos (Página Inicial) -->
     <div id="home-section" class="page-section active">
         <header class="header-bg relative h-64 md:h-96 flex items-center justify-center p-4">
             <!-- Overlay para melhorar a legibilidade do texto sobre a imagem -->
             <div class="absolute inset-0 bg-purple-900-custom bg-opacity-70"></div>
             <div class="relative z-10 text-center text-white">
-                <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-30 md:h-40 mx-auto rounded-lg">
+                <img src="https://placehold.co/100x100/3b0764/d8b4fe?text=Logo" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
                 <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
             </div>
@@ -81,7 +153,7 @@
         <main class="container mx-auto py-12 px-4">
             <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Nossos Produtos</h2>
             
-            <!-- Grid de produtos -->
+            <!-- Grid de produtos responsivo -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <!-- Produto 1: Teclado Mecânico -->
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
@@ -188,7 +260,7 @@
     <!-- Rodapé (Footer) -->
     <footer class="bg-purple-900-custom text-purple-300-custom py-6">
         <div class="container mx-auto text-center">
-            <div class="flex justify-center space-x-6 mb-2">
+            <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-6 mb-2">
                 <a href="#" class="hover:underline" onclick="showPage('home')">Início</a>
                 <a href="#" class="hover:underline" onclick="showPage('about')">Sobre Nós</a>
                 <a href="#" class="hover:underline" onclick="showPage('contact')">Contato</a>
@@ -207,7 +279,40 @@
             });
             // Mostra a seção desejada
             document.getElementById(pageId + '-section').classList.add('active');
+            // Fecha o menu móvel se estiver aberto
+            const mobileMenu = document.getElementById('mobile-menu');
+            const backdrop = document.getElementById('backdrop');
+            if (mobileMenu.classList.contains('open')) {
+                mobileMenu.classList.remove('open');
+                backdrop.classList.remove('open');
+            }
         }
+        
+        // Event listeners para o menu móvel
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const backdrop = document.getElementById('backdrop');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            backdrop.classList.add('open');
+        });
+
+        closeMobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            backdrop.classList.remove('open');
+        });
+
+        backdrop.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            backdrop.classList.remove('open');
+        });
+        
+        // Exibe a página inicial por padrão
+        window.onload = () => {
+            showPage('home');
+        };
     </script>
 
 </body>
