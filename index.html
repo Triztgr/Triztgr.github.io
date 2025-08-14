@@ -13,38 +13,39 @@
             font-family: 'Inter', sans-serif;
         }
 
-       
+        /* Classes personalizadas para cores roxas */
         .bg-purple-900-custom {
-            background-color: #3b0764; 
+            background-color: #3b0764; /* Um roxo bem escuro */
         }
         .bg-purple-700-custom {
-            background-color: #6b21a8;
+            background-color: #6b21a8; /* Um roxo mais claro para botões, etc. */
         }
         .text-purple-300-custom {
-            color: #d8b4fe; 
+            color: #d8b4fe; /* Um roxo claro para o texto */
         }
         .text-purple-500-custom {
-            color: #a855f7; 
+            color: #a855f7; /* Um roxo médio para destaques */
         }
 
+        /* Estilo para a imagem de fundo do cabeçalho */
         .header-bg {
-            background-image: url('https://placehold.co/1200x400/3b0764/d8b4fe?text=Capa+da+Página');
+            background-image: url('https://placehold.co/1200x400/3b0764/d8b4fe?text=Capa+da+Página'); /* Placeholder para a capa */
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
-
+        /* Media query para a imagem de fundo em telas maiores */
         @media (min-width: 768px) {
              .header-bg {
-                background-image: url('imagens/wllp.png');
+                background-image: url('imagens/ppdp nv.jpg'); /* Imagem real da capa enviada */
              }
         }
         
-    
+        /* Estilo para esconder as seções */
         .page-section {
             display: none;
         }
-     
+        /* Estilo para mostrar a seção ativa */
         .page-section.active {
             display: block;
         }
@@ -52,7 +53,7 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Navbar  -->
+    <!-- Navbar (Menu de Navegação) -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-purple-300-custom" onclick="showPage('home')">Artefatos Geek</a>
@@ -64,12 +65,13 @@
         </div>
     </nav>
 
+    <!-- Seção de Produtos (Página Inicial) -->
     <div id="home-section" class="page-section active">
         <header class="header-bg relative h-64 md:h-96 flex items-center justify-center p-4">
-            
+            <!-- Overlay para melhorar a legibilidade do texto sobre a imagem -->
             <div class="absolute inset-0 bg-purple-900-custom bg-opacity-70"></div>
             <div class="relative z-10 text-center text-white">
-                <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-25 md:h-40 mx-auto rounded-lg">
+                <img src="imagens/Capa para destaque do Instagram delicado rosa.jpg" alt="Logo da Artefatos Geek" class="h-24 md:h-32 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
                 <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
             </div>
@@ -78,9 +80,9 @@
         <main class="container mx-auto py-12 px-4">
             <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Nossos Produtos</h2>
             
-           
+            <!-- Grid de produtos -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                
+                <!-- Produto 1: Teclado Mecânico -->
                 <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
                     <img src="https://placehold.co/600x400/E5E7EB/4B5563?text=Teclado+Mecânico" alt="Teclado Mecânico RGB" class="w-full h-48 object-cover">
                     <div class="p-6 text-center">
