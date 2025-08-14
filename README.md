@@ -20,7 +20,17 @@ JavaScript (ES6+): Lógica interativa para o carrinho e exibição dos produtos.
 Tailwind CSS: Framework utilitário para estilização rápida e responsiva.
 
 Como Visualizar o Projeto
-Para ver a demonstração em funcionamento, basta clonar este repositório e abrir o arquivo index.html em seu navegador.
+A maneira mais fácil de acessar a demonstração é através do GitHub Pages.
+
+No seu repositório, vá em Settings > Pages.
+
+Em Source, selecione a branch main (ou a branch que contém o seu código).
+
+Salve a configuração. O GitHub Pages irá gerar uma URL pública para o seu site, geralmente no formato https://seu-usuario.github.io/seu-repositorio/.
+
+Você também pode visualizar o projeto localmente:
+
+Clone o repositório:
 
 git clone https://github.com/seu-usuario/seu-repositorio.git
 cd seu-repositorio
@@ -28,6 +38,6 @@ cd seu-repositorio
 Depois, abra o arquivo index.html em qualquer navegador moderno.
 
 Sobre a Versão com Backend
-Originalmente, este projeto estava sendo desenvolvido para se conectar a um backend e utilizar o Cloud Firestore e o Cloud Functions do Firebase. Para que o projeto com backend funcione, é necessário fazer o upgrade do plano do Firebase para o "Blaze" (pague conforme o uso). Embora este projeto atual não use o backend, a estrutura do código foi planejada para essa transição.
+Originalmente, este projeto esta sendo desenvolvido para se conectar a um backend e utilizar o Cloud Firestore e o Cloud Functions do Firebase. A estrutura do código foi planejada para essa transição.
 
 Autor: Beatriz Garcia
