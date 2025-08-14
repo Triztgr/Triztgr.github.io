@@ -13,7 +13,7 @@
         }
         /* Custom CSS para a barra de navegação e cores roxas */
         .bg-purple-900-custom {
-            background-color: #3b0764;
+            background-color: #4a215b;
         }
         .text-purple-300-custom {
             color: #d1b8e4;
@@ -55,6 +55,22 @@
             display: block;
         }
 
+        /* Mobile menu styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            max-width: 300px;
+            height: 100%;
+            background-color: #4a215b;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 101;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -63,25 +79,52 @@
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
-            <ul class="flex space-x-6">
-                <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
-                <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200">Produtos</a></li>
-                <li><a href="contato.html" class="hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
-                <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-                <li>
-                    <button id="cart-button" class="flex items-center hover:text-purple-300-custom transition-colors duration-200">
-                        <!-- Ícone de carrinho - SVG -->
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                        </svg>
-                        <span id="cart-item-count" class="ml-1 text-xs font-bold bg-red-500 text-white rounded-full px-2 py-0.5 hidden">0</span>
-                    </button>
-                </li>
-            </ul>
+            
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="md:hidden text-white hover:text-purple-300-custom transition-colors duration-200">
+                <!-- Hamburger icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <!-- Desktop Navigation Links -->
+            <div class="hidden md:flex items-center space-x-6">
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
+                    <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200">Produtos</a></li>
+                    <li><a href="contato.html" class="hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
+                    <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+                </ul>
+                <button id="cart-button" class="flex items-center hover:text-purple-300-custom transition-colors duration-200">
+                    <!-- Ícone de carrinho - SVG -->
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span id="cart-item-count" class="ml-1 text-xs font-bold bg-red-500 text-white rounded-full px-2 py-0.5 hidden">0</span>
+                </button>
+            </div>
         </div>
     </nav>
     
-    <!-- Backdrop para o carrinho -->
+    <!-- Mobile Menu (oculto por padrão) -->
+    <div id="mobile-menu" class="mobile-menu p-4 text-white">
+        <div class="flex justify-end mb-4">
+            <button id="close-mobile-menu-button" class="text-white hover:text-purple-300-custom">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <ul class="space-y-4 text-lg">
+            <li><a href="index.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
+            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Produtos</a></li>
+            <li><a href="contato.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
+            <li><a href="login.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+        </ul>
+    </div>
+
+    <!-- Backdrop para o carrinho e menu mobile -->
     <div id="cart-backdrop" class="backdrop"></div>
 
     <!-- Carrinho de Compras (Sidebar) -->
@@ -144,6 +187,9 @@
         const cartTotalSpan = document.getElementById('cart-total');
         const cartItemCountSpan = document.getElementById('cart-item-count');
         const emptyCartMessage = document.getElementById('empty-cart-message');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
 
         /**
          * Carrega o carrinho do localStorage.
@@ -332,6 +378,18 @@
 
         cartBackdrop.addEventListener('click', () => {
             cartSidebar.classList.remove('open');
+            cartBackdrop.classList.remove('open');
+            mobileMenu.classList.remove('open'); // Fecha o menu móvel se o pano de fundo for clicado
+        });
+        
+        // Event listeners para o menu móvel
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            cartBackdrop.classList.add('open');
+        });
+
+        closeMobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
             cartBackdrop.classList.remove('open');
         });
 
