@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login e Cadastro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-container {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+        <h1 id="form-title" class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h1>
+
+        <!-- Formulário de Login -->
+        <form id="login-form" class="space-y-4 form-container">
+            <div>
+                <label for="login-email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="login-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50" required>
+            </div>
+            <div>
+                <label for="login-password" class="block text-sm font-medium text-gray-700">Senha</label>
+                <input type="password" id="login-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50" required>
+            </div>
+            <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-md font-semibold hover:bg-purple-700 transition-colors duration-200">Entrar</button>
+        </form>
+
+        <!-- Formulário de Cadastro (Inicialmente oculto) -->
+        <form id="register-form" class="space-y-4 form-container hidden">
+            <div>
+                <label for="register-email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="register-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50" required>
+            </div>
+            <div>
+                <label for="register-password" class="block text-sm font-medium text-gray-700">Senha</label>
+                <input type="password" id="register-password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 focus:border-purple-500 focus:ring focus:ring-purple-500 focus:ring-opacity-50" required>
+            </div>
+            <button type="submit" class="w-full bg-fuchsia-600 text-white py-2 rounded-md font-semibold hover:bg-fuchsia-700 transition-colors duration-200">Cadastrar</button>
+        </form>
+
+        <!-- Mensagens de Feedback -->
+        <div id="message-box" class="mt-4 p-3 rounded-md hidden"></div>
+
+        <!-- Botão para alternar entre Login e Cadastro -->
+        <div class="mt-6 text-center">
+            <button id="toggle-form-btn" class="text-purple-600 hover:underline text-sm">
+                Ainda não tem uma conta? Crie uma aqui.
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Importa os módulos necessários do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Variáveis globais de ambiente (fornecidas pelo ambiente Canvas)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Autentica o usuário com o token fornecido ou anonimamente
+        async function authenticateUser() {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                console.log("Autenticação inicial bem-sucedida.");
+            } catch (error) {
+                console.error("Erro na autenticação inicial:", error);
+            }
+        }
+        authenticateUser();
+
+        // Elementos do DOM
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const formTitle = document.getElementById('form-title');
+        const toggleFormBtn = document.getElementById('toggle-form-btn');
+        const messageBox = document.getElementById('message-box');
+
+        // Referências aos inputs
+        const loginEmailInput = document.getElementById('login-email');
+        const loginPasswordInput = document.getElementById('login-password');
+        const registerEmailInput = document.getElementById('register-email');
+        const registerPasswordInput = document.getElementById('register-password');
+
+        /**
+         * Exibe uma mensagem de feedback para o usuário.
+         * @param {string} message A mensagem a ser exibida.
+         * @param {boolean} isSuccess Indica se a mensagem é de sucesso (true) ou erro (false).
+         */
+        function showMessage(message, isSuccess) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-200', 'text-red-800', 'bg-green-200', 'text-green-800');
+            if (isSuccess) {
+                messageBox.classList.add('bg-green-200', 'text-green-800');
+            } else {
+                messageBox.classList.add('bg-red-200', 'text-red-800');
+            }
+        }
+
+        // Alterna entre o formulário de login e registro
+        toggleFormBtn.addEventListener('click', () => {
+            if (loginForm.classList.contains('hidden')) {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                formTitle.textContent = 'Login';
+                toggleFormBtn.textContent = 'Ainda não tem uma conta? Crie uma aqui.';
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                formTitle.textContent = 'Cadastro';
+                toggleFormBtn.textContent = 'Já tem uma conta? Faça login aqui.';
+            }
+            messageBox.classList.add('hidden'); // Oculta a mensagem ao alternar
+        });
+
+        // Lida com o registro de um novo usuário
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = registerEmailInput.value;
+            const password = registerPasswordInput.value;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Salva o usuário no banco de dados Firestore
+                const userRef = doc(db, `artifacts/${appId}/users/${user.uid}/private/user_data`);
+                await setDoc(userRef, {
+                    email: user.email,
+                    createdAt: new Date()
+                });
+
+                showMessage('Cadastro realizado com sucesso! Faça login para continuar.', true);
+                registerForm.reset();
+            } catch (error) {
+                console.error("Erro no cadastro:", error);
+                let errorMessage = 'Ocorreu um erro ao tentar cadastrar.';
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'Este email já está em uso.';
+                } else if (error.code === 'auth/weak-password') {
+                    errorMessage = 'A senha deve ter pelo menos 6 caracteres.';
+                }
+                showMessage(errorMessage, false);
+            }
+        });
+
+        // Lida com o login de um usuário existente
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = loginEmailInput.value;
+            const password = loginPasswordInput.value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showMessage('Login bem-sucedido!', true);
+                loginForm.reset();
+            } catch (error) {
+                console.error("Erro no login:", error);
+                let errorMessage = 'Ocorreu um erro ao tentar fazer login.';
+                if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                    errorMessage = 'Email ou senha incorretos.';
+                }
+                showMessage(errorMessage, false);
+            }
+        });
+    </script>
+</body>
+</html>
