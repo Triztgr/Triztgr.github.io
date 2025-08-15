@@ -30,16 +30,10 @@
 
         /* Estilo para a imagem de fundo do cabeçalho */
         .header-bg {
-            background-image: url('imagens/wall.png'); /* Placeholder para a capa */
+            background-image: url('imagens/wall.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-        }
-        /* Media query para a imagem de fundo em telas maiores */
-        @media (min-width: 768px) {
-             .header-bg {
-                background-image: url('imagens/wall.png'); /* Placeholder para a capa real */
-             }
         }
         
         /* Estilo para esconder as seções */
@@ -141,10 +135,9 @@
 
     <!-- Seção de Produtos (Página Inicial) -->
     <div id="home-section" class="page-section active">
-        <header class="header-bg relative h-64 md:h-96 flex items-center justify-center p-4">
-            <!-- Overlay para melhorar a legibilidade do texto sobre a imagem -->
-            <div class="absolute inset-0 bg-purple-900-custom bg-opacity-70"></div>
-            <div class="relative z-10 text-center text-white">
+        <header class="header-bg relative h-64 md:h-96 flex flex-col items-center justify-center p-4">
+            <!-- Overlay removido para ver a imagem de fundo claramente -->
+            <div class="relative z-20 text-center text-white">
                 <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
                 <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
