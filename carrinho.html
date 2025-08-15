@@ -4,20 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carrinho de Compras - Artefatos Geek</title>
+    <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Importa a fonte 'Inter' para o projeto */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
+
+        /* Classes personalizadas para o tema de cores roxas */
         .bg-purple-900-custom { background-color: #3b0764; }
         .bg-purple-700-custom { background-color: #6b21a8; }
         .text-purple-300-custom { color: #d8b4fe; }
         .text-purple-500-custom { color: #a855f7; }
         .bg-purple-800-custom { background-color: #581c87; }
 
-        /* Estilos específicos para esta página */
+        /* Estilos específicos para a página do carrinho */
         .cart-item-image {
             width: 8rem;
             height: 8rem;
@@ -25,6 +29,7 @@
             object-position: center;
         }
 
+        /* Oculta os botões de controle de número em inputs */
         .no-spinners::-webkit-inner-spin-button,
         .no-spinners::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -41,10 +46,12 @@
     <!-- Navbar -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
+            <!-- Link para a página inicial -->
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
             <ul class="flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
                 <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
+                <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
             </ul>
         </div>
     </nav>
@@ -55,7 +62,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Coluna de Itens do Carrinho -->
             <div id="cart-items-container" class="md:col-span-2 bg-white rounded-xl shadow-lg p-6 space-y-4">
-                <!-- Itens serão renderizados aqui via JavaScript -->
+                <!-- Os itens do carrinho serão renderizados aqui via JavaScript -->
             </div>
 
             <!-- Coluna do Resumo do Pedido -->
@@ -81,7 +88,7 @@
         </div>
     </main>
     
-    <script type="module">
+    <script>
         // Elementos do DOM
         const cartItemsContainer = document.getElementById('cart-items-container');
         const subtotalPriceSpan = document.getElementById('subtotal-price');
@@ -89,16 +96,35 @@
         const checkoutButton = document.getElementById('checkout-button');
 
         /**
+         * Atualiza os totais do resumo do pedido.
+         * @param {number} subtotal O valor do subtotal dos produtos.
+         */
+        const updateSummary = (subtotal) => {
+            const shipping = 25.00; // Valor fixo do frete
+            const total = subtotal + shipping;
+            subtotalPriceSpan.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            totalPriceSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        };
+
+        /**
          * Renderiza os itens do carrinho no DOM.
          */
         const renderCartItems = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             cartItemsContainer.innerHTML = '';
+            
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = '<p class="text-center text-gray-500">Seu carrinho está vazio.</p>';
                 updateSummary(0);
+                // Desabilita o botão de checkout se o carrinho estiver vazio
+                checkoutButton.disabled = true;
+                checkoutButton.classList.add('opacity-50', 'cursor-not-allowed');
                 return;
             }
+
+            // Habilita o botão de checkout se houver itens
+            checkoutButton.disabled = false;
+            checkoutButton.classList.remove('opacity-50', 'cursor-not-allowed');
 
             let subtotal = 0;
             cart.forEach(item => {
@@ -127,9 +153,20 @@
                 // Adiciona listeners para os botões de quantidade
                 itemDiv.querySelector('.remove-one-btn').addEventListener('click', () => updateQuantity(item.id, -1));
                 itemDiv.querySelector('.add-one-btn').addEventListener('click', () => updateQuantity(item.id, 1));
-                itemDiv.querySelector('.item-quantity-input').addEventListener('change', (e) => updateQuantity(item.id, parseInt(e.target.value) - item.quantity, true));
+                
+                // Adiciona listener para a mudança manual no input
+                itemDiv.querySelector('.item-quantity-input').addEventListener('change', (e) => {
+                    let newQuantity = parseInt(e.target.value, 10);
+                    // Garante que a quantidade seja no mínimo 1
+                    if (isNaN(newQuantity) || newQuantity < 1) {
+                        newQuantity = 1;
+                        e.target.value = 1;
+                    }
+                    updateQuantity(item.id, newQuantity - item.quantity, true);
+                });
             });
 
+            // Chama a função para atualizar o resumo com o subtotal calculado.
             updateSummary(subtotal);
         };
 
@@ -144,14 +181,17 @@
             const item = cart.find(i => i.id === productId);
 
             if (item) {
+                let newQuantity;
                 if (isManualUpdate) {
-                    item.quantity = Math.max(1, item.quantity + delta);
+                    newQuantity = item.quantity + delta;
                 } else {
-                    item.quantity = Math.max(1, item.quantity + delta);
+                    newQuantity = item.quantity + delta;
                 }
                 
-                if (item.quantity <= 0) {
+                if (newQuantity <= 0) {
                     cart = cart.filter(i => i.id !== productId);
+                } else {
+                    item.quantity = newQuantity;
                 }
                 
                 localStorage.setItem('cart', JSON.stringify(cart));
@@ -160,32 +200,16 @@
         };
 
         /**
-         * Atualiza os totais de preço.
-         * @param {number} subtotal O valor do subtotal.
+         * Redireciona para a página de checkout.
          */
-        const updateSummary = (subtotal) => {
-            const shipping = 25.00; // Valor fixo do frete
-            const total = subtotal + shipping;
-            subtotalPriceSpan.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
-            totalPriceSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        const redirectToCheckout = () => {
+            window.location.href = 'checkout.html';
         };
 
-        /**
-         * Lida com a finalização da compra.
-         */
-        const handleCheckout = () => {
-            // Limpa o carrinho no localStorage
-            localStorage.removeItem('cart');
-            // Redireciona o usuário para a nova página de confirmação
-            window.location.href = 'pedido-finalizado.html';
-        };
-
-        // Adiciona o event listener ao botão de checkout
-        checkoutButton.addEventListener('click', handleCheckout);
-
-        // Renderiza os itens do carrinho ao carregar a página
+        // Adiciona um listener para renderizar o carrinho ao carregar a página
         document.addEventListener('DOMContentLoaded', () => {
             renderCartItems();
+            checkoutButton.addEventListener('click', redirectToCheckout);
         });
     </script>
 </body>

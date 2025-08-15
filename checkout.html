@@ -3,217 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finalizar Compra</title>
+    <title>Finalizar Compra - Artefatos Geek</title>
     <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Define a fonte e cores personalizadas para o tema roxo */
+        /* Importa a fonte 'Inter' para o projeto */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
 
-        /* Classes personalizadas para cores roxas */
-        .bg-purple-900-custom {
-            background-color: #3b0764; /* Um roxo bem escuro */
-        }
-        .bg-purple-700-custom {
-            background-color: #6b21a8; /* Um roxo mais claro para botões, etc. */
-        }
-        .text-purple-300-custom {
-            color: #d8b4fe; /* Um roxo claro para o texto */
-        }
-        .text-purple-500-custom {
-            color: #a855f7; /* Um roxo médio para destaques */
-        }
+        /* Classes personalizadas para o tema de cores roxas */
+        .bg-purple-900-custom { background-color: #3b0764; }
+        .bg-purple-700-custom { background-color: #6b21a8; }
+        .text-purple-300-custom { color: #d8b4fe; }
+        .text-purple-500-custom { color: #a855f7; }
+        .bg-purple-800-custom { background-color: #581c87; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Navbar (Menu de Navegação) -->
+    <!-- Navbar -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
-            
-            <!-- Search bar -->
-            <div class="flex items-center w-full md:w-auto">
-                <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="w-full md:w-72 px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900">
-                <button id="search-button" class="bg-purple-700-custom text-white py-2 px-4 rounded-r-full hover:bg-purple-800 transition-colors duration-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </button>
-            </div>
-
-            <!-- Desktop Navigation Links -->
             <ul class="flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
                 <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-                <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Conteúdo da Página de Checkout -->
     <main class="container mx-auto py-12 px-4">
-        <h1 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Finalizar Compra</h1>
-        
-        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 md:flex md:space-x-8">
+        <h1 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Checkout</h1>
 
-            <!-- Seção de Dados Pessoais e Endereço -->
-            <div class="md:w-1/2">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Dados Pessoais e Endereço</h2>
-                <form id="checkout-form">
-                    <div class="mb-4">
-                        <label for="full-name" class="block text-gray-700 font-bold mb-2">Nome Completo</label>
-                        <input type="text" id="full-name" name="fullName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+            <!-- Formulário de Informações de Envio e Pagamento -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <!-- Aviso para o usuário -->
+                <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-lg" role="alert">
+                    <p class="font-bold">Aviso:</p>
+                    <p class="text-sm">Por ser uma demonstração, o preenchimento dos campos não é obrigatório.</p>
+                </div>
+
+                <h2 class="text-2xl font-bold mb-4">Informações de Envio</h2>
+                <form id="checkout-form" class="space-y-4">
+                    <div>
+                        <label for="full-name" class="block text-gray-700 font-medium">Nome Completo</label>
+                        <input type="text" id="full-name" name="fullName" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium">Email</label>
+                        <input type="email" id="email" name="email" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div class="mb-4">
-                        <label for="address" class="block text-gray-700 font-bold mb-2">Endereço</label>
-                        <input type="text" id="address" name="address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <div>
+                        <label for="address" class="block text-gray-700 font-medium">Endereço</label>
+                        <input type="text" id="address" name="address" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div class="mb-4">
-                        <label for="city" class="block text-gray-700 font-bold mb-2">Cidade</label>
-                        <input type="text" id="city" name="city" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <div>
+                        <label for="city" class="block text-gray-700 font-medium">Cidade</label>
+                        <input type="text" id="city" name="city" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label for="zip-code" class="block text-gray-700 font-medium">CEP</label>
+                        <input type="text" id="zip-code" name="zipCode" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold pt-6 mb-4">Informações de Pagamento</h2>
+                    <div>
+                        <label for="card-number" class="block text-gray-700 font-medium">Número do Cartão</label>
+                        <input type="text" id="card-number" name="cardNumber" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label for="state" class="block text-gray-700 font-bold mb-2">Estado</label>
-                            <input type="text" id="state" name="state" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <label for="expiration-date" class="block text-gray-700 font-medium">Validade</label>
+                            <input type="text" id="expiration-date" name="expirationDate" placeholder="MM/AA" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                         <div>
-                            <label for="zip" class="block text-gray-700 font-bold mb-2">CEP</label>
-                            <input type="text" id="zip" name="zip" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                            <label for="cvv" class="block text-gray-700 font-medium">CVV</label>
+                            <input type="text" id="cvv" name="cvv" class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
                         </div>
                     </div>
                 </form>
             </div>
 
-            <!-- Seção de Pagamento e Resumo -->
-            <div class="md:w-1/2 mt-8 md:mt-0">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Informações de Pagamento</h2>
-                <div class="mb-4">
-                    <label for="card-name" class="block text-gray-700 font-bold mb-2">Nome no Cartão</label>
-                    <input type="text" id="card-name" name="cardName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <!-- Resumo do Pedido -->
+            <div class="bg-white rounded-xl shadow-lg p-6 h-fit">
+                <h2 class="text-2xl font-bold mb-4">Resumo do Pedido</h2>
+                <div id="checkout-items-list" class="space-y-4">
+                    <!-- Itens serão renderizados aqui via JavaScript -->
                 </div>
-                <div class="mb-4">
-                    <label for="card-number" class="block text-gray-700 font-bold mb-2">Número do Cartão</label>
-                    <input type="text" id="card-number" name="cardNumber" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <div>
-                        <label for="exp-date" class="block text-gray-700 font-bold mb-2">Data de Validade</label>
-                        <input type="text" id="exp-date" name="expDate" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="MM/AA" required>
+
+                <div class="mt-6 pt-4 border-t border-gray-200">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">Subtotal:</span>
+                        <span id="checkout-subtotal" class="text-gray-800 font-semibold">R$ 0,00</span>
                     </div>
-                    <div>
-                        <label for="cvv" class="block text-gray-700 font-bold mb-2">CVV</label>
-                        <input type="text" id="cvv" name="cvv" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-600">Frete:</span>
+                        <span id="checkout-shipping" class="text-gray-800 font-semibold">R$ 25,00</span>
+                    </div>
+                    <div class="flex justify-between items-center font-bold text-lg pt-4 border-t border-gray-200 mt-4">
+                        <span>Total:</span>
+                        <span id="checkout-total" class="text-purple-700-custom">R$ 25,00</span>
                     </div>
                 </div>
 
-                <!-- Resumo da compra -->
-                <div class="bg-gray-50 rounded-lg p-6 mb-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-4">Resumo da Compra</h3>
-                    <div id="checkout-summary" class="space-y-2 text-gray-700">
-                        <!-- Resumo dos itens e total será inserido aqui via JavaScript -->
-                    </div>
-                    <div class="border-t border-gray-200 mt-4 pt-4">
-                        <p class="flex justify-between items-center text-xl font-bold text-gray-900">
-                            Total Geral:
-                            <span id="checkout-total-value">R$ 0,00</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex justify-end">
-                    <button id="pay-now-btn" type="submit" class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
-                        Pagar Agora
-                    </button>
-                </div>
+                <button id="place-order-button" class="w-full bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg mt-6 hover:bg-purple-800-custom transition-colors duration-300">
+                    Finalizar Pedido
+                </button>
             </div>
-
         </div>
     </main>
-
-    <!-- Rodapé (Footer) -->
-    <footer class="bg-purple-900-custom text-purple-300-custom py-6 mt-12">
-        <div class="container mx-auto text-center">
-            <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
-        </div>
-    </footer>
-
+    
     <script>
-        const checkoutSummaryDiv = document.getElementById('checkout-summary');
-        const checkoutTotalValueSpan = document.getElementById('checkout-total-value');
-        const payNowBtn = document.getElementById('pay-now-btn');
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
+        // Elementos do DOM
+        const checkoutItemsList = document.getElementById('checkout-items-list');
+        const checkoutSubtotalSpan = document.getElementById('checkout-subtotal');
+        const checkoutTotalSpan = document.getElementById('checkout-total');
+        const placeOrderButton = document.getElementById('place-order-button');
+        const checkoutForm = document.getElementById('checkout-form');
 
         /**
-         * Renderiza o resumo do carrinho na página de checkout.
+         * Renderiza os itens do carrinho e calcula os totais.
          */
-        const renderCheckoutSummary = () => {
+        const renderCheckoutItems = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            checkoutSummaryDiv.innerHTML = '';
-            let total = 0;
-
+            checkoutItemsList.innerHTML = '';
+            
             if (cart.length === 0) {
-                checkoutSummaryDiv.innerHTML = '<p class="text-center">Seu carrinho está vazio. <a href="index.html" class="text-purple-700-custom hover:underline">Adicione produtos</a> para continuar.</p>';
-                payNowBtn.style.display = 'none';
+                checkoutItemsList.innerHTML = '<p class="text-center text-gray-500">Seu carrinho está vazio.</p>';
+                updateSummary(0);
+                // Desabilita o botão se não houver itens no carrinho
+                placeOrderButton.disabled = true;
+                placeOrderButton.classList.add('opacity-50', 'cursor-not-allowed');
                 return;
             }
 
+            let subtotal = 0;
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                const itemHtml = document.createElement('div');
-                itemHtml.classList.add('flex', 'justify-between');
-                itemHtml.innerHTML = `
-                    <span>${item.name} (${item.quantity})</span>
-                    <span>R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+                subtotal += itemTotal;
+
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('flex', 'justify-between', 'items-center', 'border-b', 'border-gray-200', 'pb-2', 'last:border-b-0', 'last:pb-0');
+                itemDiv.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded-md">
+                        <div>
+                            <h3 class="font-semibold text-sm">${item.name}</h3>
+                            <p class="text-gray-500 text-xs">${item.quantity} x R$ ${item.price.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                    </div>
+                    <span class="font-bold text-sm text-purple-700-custom">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
                 `;
-                checkoutSummaryDiv.appendChild(itemHtml);
+                checkoutItemsList.appendChild(itemDiv);
             });
 
-            checkoutTotalValueSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            updateSummary(subtotal);
         };
-
-        // Adiciona um listener para o botão de pagamento
-        payNowBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Impede o envio do formulário
-            // Aqui você pode adicionar a lógica de validação e processamento.
-            // Por enquanto, apenas exibe uma mensagem de sucesso.
-            alert('Compra finalizada com sucesso! Esta é apenas uma página de demonstração.');
-            // Limpa o carrinho após a compra
-            localStorage.removeItem('cart');
-            // Redireciona para a página inicial ou de sucesso
-            window.location.href = 'index.html';
-        });
 
         /**
-         * Redireciona para a página inicial com o termo de pesquisa.
+         * Atualiza os totais de preço.
+         * @param {number} subtotal O valor do subtotal.
          */
-        const redirectToSearchPage = () => {
-            const query = searchInput.value;
-            if (query) {
-                window.location.href = `index.html?query=${encodeURIComponent(query)}`;
-            }
+        const updateSummary = (subtotal) => {
+            const shipping = 25.00; // Valor fixo do frete
+            const total = subtotal + shipping;
+            checkoutSubtotalSpan.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+            checkoutTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
         };
 
-        // Adiciona event listeners para a pesquisa
-        searchButton.addEventListener('click', redirectToSearchPage);
-        searchInput.addEventListener('keypress', (event) => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                redirectToSearchPage();
-            }
-        });
+        /**
+         * Lida com a finalização do pedido.
+         */
+        const handlePlaceOrder = (event) => {
+            // Previne o envio padrão do formulário
+            event.preventDefault();
 
-        // Carrega o resumo da compra ao carregar a página
-        window.onload = renderCheckoutSummary;
+            // O redirecionamento acontece independentemente de os campos estarem preenchidos
+            // Isso torna a página amigável para demonstração
+            localStorage.removeItem('cart');
+            window.location.href = 'pedido-finalizado.html';
+        };
+
+        // Adiciona o event listener ao botão de checkout ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCheckoutItems();
+            placeOrderButton.addEventListener('click', handlePlaceOrder);
+        });
     </script>
 </body>
 </html>
