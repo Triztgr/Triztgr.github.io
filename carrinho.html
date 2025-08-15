@@ -3,217 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras - Artefatos Geek</title>
+    <title>Carrinho de Compras</title>
     <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos personalizados, mantendo a consistência do tema */
+        /* Define a fonte e cores personalizadas para o tema roxo */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
-        .bg-purple-900-custom { background-color: #3b0764; }
-        .bg-purple-700-custom { background-color: #6b21a8; }
-        .text-purple-300-custom { color: #d8b4fe; }
-        .text-purple-500-custom { color: #a855f7; }
+
+        /* Classes personalizadas para cores roxas */
+        .bg-purple-900-custom {
+            background-color: #3b0764; /* Um roxo bem escuro */
+        }
+        .bg-purple-700-custom {
+            background-color: #6b21a8; /* Um roxo mais claro para botões, etc. */
+        }
+        .text-purple-300-custom {
+            color: #d8b4fe; /* Um roxo claro para o texto */
+        }
+        .text-purple-500-custom {
+            color: #a855f7; /* Um roxo médio para destaques */
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Navbar (Menu de Navegação) - Mantém a mesma estrutura do index.html -->
+    <!-- Navbar (Menu de Navegação) -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex justify-between items-center">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
             
-            <!-- Mobile and Desktop Cart Icon -->
-            <div class="flex items-center space-x-4">
-                <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
-                    <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
-                </a>
-            </div>
-
             <!-- Desktop Navigation Links -->
-            <ul class="hidden md:flex items-center space-x-6">
+            <ul class="flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
-                <li><a href="index.html#about-section" class="hover:text-purple-300-custom transition-colors duration-200">Sobre Nós</a></li>
-                <li><a href="index.html#contact-section" class="hover:text-purple-300-custom transition-colors duration-200">Contato</a></li>
                 <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-                <li><a href="carrinho.html" class="text-purple-300-custom">Carrinho</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Seção do Carrinho de Compras -->
+    <!-- Conteúdo do Carrinho -->
     <main class="container mx-auto py-12 px-4">
+        <h1 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Seu Carrinho</h1>
+        
         <div class="bg-white rounded-xl shadow-lg p-8">
-            <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Seu Carrinho</h2>
+            <!-- Tabela de itens do carrinho -->
+            <div id="cart-table-container">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Produto
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Preço
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Quantidade
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Total
+                            </th>
+                            <th scope="col" class="relative px-6 py-3">
+                                <span class="sr-only">Ações</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="cart-items" class="bg-white divide-y divide-gray-200">
+                        <!-- Itens do carrinho serão inseridos aqui via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
             
-            <div id="cart-items" class="border-b pb-4 mb-4">
-                <!-- Itens do carrinho serão inseridos aqui via JS -->
+            <!-- Totais do carrinho -->
+            <div class="flex justify-end mt-6">
+                <div class="text-right">
+                    <p class="text-xl font-bold text-gray-900">Total: <span id="cart-total-value">R$ 0,00</span></p>
+                    <button id="finalizar-compra-btn" class="mt-4 bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
+                        Finalizar Compra
+                    </button>
+                </div>
             </div>
 
-            <div class="flex justify-between items-center mb-6">
-                <span class="text-2xl font-bold">Total:</span>
-                <span id="cart-total" class="text-2xl font-bold text-purple-700-custom">R$ 0,00</span>
+            <!-- Carrinho Vazio -->
+            <div id="empty-cart-message" class="hidden text-center text-gray-500 p-8">
+                <p class="text-2xl font-semibold mb-2">Seu carrinho está vazio!</p>
+                <a href="index.html" class="text-purple-700-custom hover:underline">Voltar para a loja</a>
             </div>
 
-            <div class="flex items-center justify-center">
-                <button class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
-                    Finalizar Compra
-                </button>
-            </div>
         </div>
     </main>
 
-    <!-- Rodapé (Footer) - Mantém a mesma estrutura do index.html -->
-    <footer class="bg-purple-900-custom text-purple-300-custom py-6 mt-12">
+    <!-- Rodapé (Footer) -->
+    <footer class="bg-purple-900-custom text-purple-300-custom py-6">
         <div class="container mx-auto text-center">
-            <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-6 mb-2">
-                <a href="index.html" class="hover:underline">Início</a>
-                <a href="index.html#about-section" class="hover:underline">Sobre Nós</a>
-                <a href="index.html#contact-section" class="hover:underline">Contato</a>
-            </div>
             <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
-            <p class="mt-2">Criado por Beatriz Garcia</p>
         </div>
     </footer>
 
     <script>
         // Elementos do DOM
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalSpan = document.getElementById('cart-total');
-        const cartItemCountSpan = document.getElementById('cart-item-count');
+        const cartItemsBody = document.getElementById('cart-items');
+        const cartTotalValueSpan = document.getElementById('cart-total-value');
+        const emptyCartMessageDiv = document.getElementById('empty-cart-message');
+        const cartTableContainer = document.getElementById('cart-table-container');
+        const finalizePurchaseButton = document.getElementById('finalizar-compra-btn');
 
-        /**
-         * Salva o carrinho no localStorage.
-         * @param {Array} cartData O array de itens do carrinho.
-         */
-        const saveCart = (cartData) => {
-            localStorage.setItem('cart', JSON.stringify(cartData));
-            updateCartItemCount();
-        };
-
-        /**
-         * Remove um item do carrinho.
-         * @param {string} productId O ID do produto a ser removido.
-         */
-        const removeItem = (productId) => {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cart = cart.filter(item => item.id !== productId);
-            saveCart(cart);
-            renderCart();
-        };
-
-        /**
-         * Atualiza a quantidade de um item no carrinho.
-         * @param {string} productId O ID do produto.
-         * @param {number} newQuantity A nova quantidade.
-         */
-        const updateQuantity = (productId, newQuantity) => {
-            let cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity = newQuantity;
-                if (item.quantity <= 0) {
-                    removeItem(productId);
-                } else {
-                    saveCart(cart);
-                    renderCart();
-                }
-            }
-        };
-
-        /**
-         * Atualiza o contador de itens na barra de navegação, lendo do localStorage.
-         */
-        const updateCartItemCount = () => {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-            
-            if (totalItems > 0) {
-                cartItemCountSpan.textContent = totalItems;
-                cartItemCountSpan.classList.remove('hidden');
-            } else {
-                cartItemCountSpan.classList.add('hidden');
-            }
-        };
-
-        /**
-         * Renderiza o conteúdo do carrinho, lendo os dados do localStorage.
-         */
+        // Função para carregar e renderizar os itens do carrinho
         const renderCart = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            cartItemsContainer.innerHTML = '';
+            cartItemsBody.innerHTML = '';
             let total = 0;
-            
-            if (cart.length > 0) {
-                cart.forEach(item => {
-                    const subtotal = item.price * item.quantity;
-                    total += subtotal;
-                    const itemElement = document.createElement('div');
-                    itemElement.classList.add('flex', 'flex-col', 'md:flex-row', 'items-center', 'justify-between', 'py-4', 'border-b');
-                    itemElement.innerHTML = `
-                        <div class="flex items-center mb-4 md:mb-0">
-                            <img src="${item.image}" alt="${item.name}" class="w-20 h-20 rounded-lg mr-4 object-cover">
-                            <div>
-                                <h4 class="font-semibold text-gray-900">${item.name}</h4>
-                                <p class="text-lg text-purple-700-custom font-bold">R$ ${item.price.toFixed(2).replace('.', ',')}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="flex items-center">
-                                <button data-id="${item.id}" class="decrease-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">-</button>
-                                <span class="font-semibold w-8 text-center">${item.quantity}</span>
-                                <button data-id="${item.id}" class="increase-qty-btn bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300">+</button>
-                            </div>
-                            <span class="text-lg font-semibold text-gray-900">R$ ${subtotal.toFixed(2).replace('.', ',')}</span>
-                            <button data-id="${item.id}" class="remove-item-btn ml-2 text-red-500 hover:text-red-700">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-1 12-14-1-1-12zm-3 0V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3m2 0h8"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-                    cartItemsContainer.appendChild(itemElement);
-                });
 
-                // Adiciona event listeners aos botões do carrinho
-                document.querySelectorAll('.increase-qty-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const productId = e.target.dataset.id;
-                        const item = cart.find(i => i.id === productId);
-                        if (item) updateQuantity(productId, item.quantity + 1);
-                    });
-                });
-                document.querySelectorAll('.decrease-qty-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const productId = e.target.dataset.id;
-                        const item = cart.find(i => i.id === productId);
-                        if (item) updateQuantity(productId, item.quantity - 1);
-                    });
-                });
-                document.querySelectorAll('.remove-item-btn').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const productId = e.currentTarget.dataset.id;
-                        removeItem(productId);
-                    });
-                });
+            if (cart.length === 0) {
+                cartTableContainer.style.display = 'none';
+                finalizePurchaseButton.style.display = 'none';
+                emptyCartMessageDiv.classList.remove('hidden');
+                return;
             } else {
-                cartItemsContainer.innerHTML = `<p class="text-gray-500 text-center text-lg mt-8">Seu carrinho está vazio.</p>`;
+                cartTableContainer.style.display = 'block';
+                finalizePurchaseButton.style.display = 'block';
+                emptyCartMessageDiv.classList.add('hidden');
             }
-            
-            cartTotalSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded-full" src="${item.image}" alt="">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">${item.name}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">R$ ${item.price.toFixed(2).replace('.', ',')}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${item.quantity}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <span class="text-gray-900">R$ ${itemTotal.toFixed(2).replace('.', ',')}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="removeFromCart('${item.id}')" class="text-red-600 hover:text-red-900">Remover</button>
+                    </td>
+                `;
+                cartItemsBody.appendChild(row);
+            });
+
+            cartTotalValueSpan.textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
         };
 
-        // Inicializa a página do carrinho
-        window.onload = () => {
+        // Função para remover um item do carrinho
+        const removeFromCart = (productId) => {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
-            updateCartItemCount();
         };
+
+        // Função para finalizar a compra (redireciona para a página de checkout)
+        const finalizarCompra = () => {
+            // Salva os dados do carrinho para que a página de checkout possa acessá-los, se necessário
+            localStorage.setItem('checkoutCart', localStorage.getItem('cart'));
+            
+            // Redireciona o usuário para a nova página de checkout
+            window.location.href = 'checkout.html';
+        };
+
+        // Adiciona o event listener ao botão de finalizar compra
+        finalizePurchaseButton.addEventListener('click', finalizarCompra);
+
+        // Renderiza o carrinho ao carregar a página
+        window.onload = renderCart;
     </script>
 </body>
 </html>
