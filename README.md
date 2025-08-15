@@ -1,3 +1,7 @@
+Vídeo de demonstração: https://drive.google.com/file/d/1ihkUlryjr5P2A2nBE-UWUZxcT1F7Ni2t/view?usp=sharing
+
+Link da loja: https://triztgr.github.io/
+
 Artefatos Geek - Demonstração de E-commerce
 Este é o repositório para a página de demonstração de uma loja virtual fictícia, a "Artefatos Geek". O objetivo deste projeto é servir como um portfólio e um ambiente de aprendizado, mostrando a construção de um front-end completo para e-commerce que não depende de um servidor backend.
 
