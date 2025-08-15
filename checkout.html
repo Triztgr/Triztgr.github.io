@@ -33,9 +33,17 @@
 
     <!-- Navbar (Menu de Navegação) -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
             
+            <!-- Search bar -->
+            <div class="flex items-center w-full md:w-auto">
+                <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="w-full md:w-72 px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900">
+                <button id="search-button" class="bg-purple-700-custom text-white py-2 px-4 rounded-r-full hover:bg-purple-800 transition-colors duration-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+            </div>
+
             <!-- Desktop Navigation Links -->
             <ul class="flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
@@ -141,6 +149,8 @@
         const checkoutSummaryDiv = document.getElementById('checkout-summary');
         const checkoutTotalValueSpan = document.getElementById('checkout-total-value');
         const payNowBtn = document.getElementById('pay-now-btn');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
 
         /**
          * Renderiza o resumo do carrinho na página de checkout.
@@ -181,6 +191,25 @@
             localStorage.removeItem('cart');
             // Redireciona para a página inicial ou de sucesso
             window.location.href = 'index.html';
+        });
+
+        /**
+         * Redireciona para a página inicial com o termo de pesquisa.
+         */
+        const redirectToSearchPage = () => {
+            const query = searchInput.value;
+            if (query) {
+                window.location.href = `index.html?query=${encodeURIComponent(query)}`;
+            }
+        };
+
+        // Adiciona event listeners para a pesquisa
+        searchButton.addEventListener('click', redirectToSearchPage);
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                redirectToSearchPage();
+            }
         });
 
         // Carrega o resumo da compra ao carregar a página

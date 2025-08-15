@@ -36,13 +36,9 @@
             background-repeat: no-repeat;
         }
         
-        /* Estilo para esconder as seções */
+        /* Estilo para esconder a seção de produtos, se necessário (mas não usada agora) */
         .page-section {
-            display: none;
-        }
-        /* Estilo para mostrar a seção ativa */
-        .page-section.active {
-            display: block;
+            display: block; /* Mantém a seção de produtos visível */
         }
 
         /* Mobile menu styles */
@@ -81,19 +77,27 @@
 <body class="bg-gray-100 text-gray-800">
 
    <!-- Navbar (Menu de Navegação) -->
-<nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
-    <div class="container mx-auto flex justify-between items-center">
+   <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
         <a href="#" class="text-2xl font-bold text-purple-300-custom" onclick="showPage('home')">Artefatos Geek</a>
         
+        <!-- Search bar -->
+        <div class="flex items-center w-full md:w-auto">
+            <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="w-full md:w-72 px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900">
+            <button id="search-button" class="bg-purple-700-custom text-white py-2 px-4 rounded-r-full hover:bg-purple-800 transition-colors duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </button>
+        </div>
+
         <!-- Mobile Menu Button and Cart Button -->
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-4 md:hidden">
             <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
                 <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
             </a>
-            <button id="mobile-menu-button" class="md:hidden text-white hover:text-purple-300-custom transition-colors duration-200">
+            <button id="mobile-menu-button" class="text-white hover:text-purple-300-custom transition-colors duration-200">
                 <!-- Hamburger icon -->
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
@@ -104,8 +108,6 @@
         <!-- Desktop Navigation Links -->
         <ul class="hidden md:flex items-center space-x-6">
             <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
-            <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('about')">Sobre Nós</a></li>
-            <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('contact')">Contato</a></li>
             <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
             <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
         </ul>
@@ -123,8 +125,6 @@
         </div>
         <ul class="space-y-4 text-lg">
             <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
-            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('about')">Sobre Nós</a></li>
-            <li><a href="#" class="block py-2 hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('contact')">Contato</a></li>
             <li><a href="login.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
             <li><a href="carrinho.html" class="block py-2 hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
         </ul>
@@ -136,7 +136,8 @@
     <!-- Seção de Produtos (Página Inicial) -->
     <div id="home-section" class="page-section active">
         <header class="header-bg relative h-64 md:h-96 flex flex-col items-center justify-center p-4">
-            <!-- Overlay removido para ver a imagem de fundo claramente -->
+            <!-- Overlay adicionado com opacidade reduzida -->
+           
             <div class="relative z-20 text-center text-white">
                 <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
@@ -154,109 +155,48 @@
         </main>
     </div>
 
-    <!-- Seção "Sobre Nós" -->
-    <div id="about-section" class="page-section">
-        <main class="container mx-auto py-12 px-4">
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <h2 class="text-4xl font-bold text-center mb-6 text-purple-700-custom">Sobre Nós</h2>
-                <p class="text-gray-700 mb-4">
+    <!-- Rodapé (Footer) com seções "Sobre Nós" e "Contato" incorporadas -->
+    <footer class="bg-purple-900-custom text-purple-300-custom py-12">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
+            <!-- Seção "Sobre Nós" -->
+            <div>
+                <h3 class="text-2xl font-bold mb-4">Sobre Nós</h3>
+                <p class="text-gray-300 leading-relaxed">
                     A Artefatos Geek nasceu da paixão por tecnologia, jogos e inovação. Nosso objetivo é trazer os melhores produtos do universo geek, de periféricos de alta performance a itens de colecionador exclusivos. Acreditamos que a tecnologia deve ser acessível e inspiradora para todos.
                 </p>
-                <p class="text-gray-700">
-                    Nossa equipe é formada por entusiastas que testam e selecionam cada produto com o máximo de cuidado, garantindo a qualidade e a satisfação dos nossos clientes.
-                </p>
             </div>
-        </main>
-    </div>
-
-    <!-- Seção "Contato" -->
-    <div id="contact-section" class="page-section">
-        <main class="container mx-auto py-12 px-4">
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <h2 class="text-4xl font-bold text-center mb-6 text-purple-700-custom">Fale Conosco</h2>
-                <p class="text-gray-700 mb-4 text-center">
-                    Tem alguma dúvida, sugestão ou precisa de suporte? Entre em contato conosco!
+            
+            <!-- Seção "Contato" -->
+            <div>
+                <h3 class="text-2xl font-bold mb-4">Fale Conosco</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    Tem alguma dúvida, sugestão ou precisa de suporte? <br>Entre em contato conosco através do formulário abaixo.
                 </p>
-                <form class="max-w-md mx-auto">
-                    <div class="mb-4">
-                        <label for="name" class="block text-gray-700 font-bold mb-2">Nome</label>
-                        <input type="text" id="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
-                        <input type="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    </div>
-                    <div class="mb-4">
-                        <label for="message" class="block text-gray-700 font-bold mb-2">Mensagem</label>
-                        <textarea id="message" rows="5" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                    </div>
-                    <div class="flex items-center justify-center">
-                        <button type="submit" class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
-                            Enviar Mensagem
-                        </button>
-                    </div>
+                <!-- Formulário de contato simplificado no rodapé -->
+                <form class="mt-4">
+                    <input type="text" placeholder="Seu Nome" class="w-full bg-purple-800-custom border-0 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400">
+                    <input type="email" placeholder="Seu Email" class="w-full bg-purple-800-custom border-0 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400">
+                    <textarea placeholder="Sua Mensagem" rows="3" class="w-full bg-purple-800-custom border-0 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400"></textarea>
+                    <button type="submit" class="w-full bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
+                        Enviar Mensagem
+                    </button>
                 </form>
             </div>
-        </main>
-    </div>
-
-    <!-- Rodapé (Footer) -->
-    <footer class="bg-purple-900-custom text-purple-300-custom py-6">
-        <div class="container mx-auto text-center">
-            <div class="flex flex-col md:flex-row justify-center space-y-2 md:space-y-0 md:space-x-6 mb-2">
-                <a href="#" class="hover:underline" onclick="showPage('home')">Início</a>
-                <a href="#" class="hover:underline" onclick="showPage('about')">Sobre Nós</a>
-                <a href="#" class="hover:underline" onclick="showPage('contact')">Contato</a>
-            </div>
+        </div>
+        <div class="container mx-auto px-4 text-center mt-8 pt-4 border-t border-purple-800-custom">
             <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
-            <p class="mt-2">Criado por Beatriz Garcia</p>
+            <p class="mt-1">Criado por Beatriz Garcia</p>
         </div>
     </footer>
 
-    <script>
-        // Array de produtos hardcoded para a página de demonstração
-        const products = [
-            {
-                id: '1',
-                name: 'Teclado Mecânico RGB',
-                price: 350.50,
-                image: 'imagens/teclado.png'
-            },
-            {
-                id: '2',
-                name: 'Mouse Gamer Ergonômico',
-                price: 180.00,
-                image: 'imagens/mouse.png'
-            },
-            {
-                id: '3',
-                name: 'Headset com Microfone',
-                price: 250.99,
-                image: 'imagens/headset.png'
-            },
-            {
-                id: '4',
-                name: 'Monitor Ultrawide 144Hz',
-                price: 1899.99,
-                image: 'imagens/monitor.png'
-            },
-            {
-                id: '5',
-                name: 'Cadeira Gamer',
-                price: 850.00,
-                image: 'imagens/cadeira.png'
-            },
-            {
-                id: '6',
-                name: 'Microfone Condensador',
-                price: 420.00,
-                image: 'imagens/microfone.png'
-            }
-        ];
+    <script type="module">
+        import { products } from './products.js';
 
         // Elementos do DOM
         const productsContainer = document.getElementById('products-container');
         const cartItemCountSpan = document.getElementById('cart-item-count');
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
 
         /**
          * Adiciona um produto ao carrinho no localStorage.
@@ -295,69 +235,84 @@
         };
 
         /**
-         * Renderiza os produtos na página a partir do array local.
+         * Renderiza os produtos na página a partir de um array.
+         * @param {Array} filteredProducts O array de produtos a ser renderizado.
          */
-        const renderProducts = () => {
+        const renderProducts = (filteredProducts) => {
             productsContainer.innerHTML = '';
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden');
+            // Se não houver produtos filtrados, exibe uma mensagem
+            if (filteredProducts.length === 0) {
+                productsContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">Nenhum produto encontrado.</p>';
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('a');
+                productCard.href = `product.html?id=${product.id}`;
+                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden', 'block');
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover object-center rounded-t-xl">
                     <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-2">${product.name}</h3>
-                        <p class="text-gray-600 text-sm mb-4">Perfeito para gamers e programadores.</p>
-                        <span class="text-2xl font-bold text-purple-700-custom">R$ ${product.price.toFixed(2).replace('.', ',')}</span>
-                        <button data-id="${product.id}" class="add-to-cart-btn mt-4 w-full bg-purple-700-custom text-white py-3 px-4 rounded-lg font-bold hover:bg-purple-800 transition-colors duration-300">
-                            Comprar
-                        </button>
+                        <h3 class="text-xl font-semibold mb-2 text-gray-900">${product.name}</h3>
+                        <p class="text-2xl font-bold text-purple-700-custom">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
                     </div>
                 `;
                 productsContainer.appendChild(productCard);
             });
-
-            // Adiciona event listeners aos botões "Comprar"
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const productId = e.target.dataset.id;
-                    addToCart(productId);
-                });
-            });
         };
 
-        // Função para mostrar a página correta
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(pageId + '-section').classList.add('active');
-            closeMobileMenu();
-        }
+        /**
+         * Filtra os produtos com base na pesquisa e renderiza o resultado.
+         */
+        const performSearch = () => {
+            const query = searchInput.value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(query) ||
+                product.description.toLowerCase().includes(query)
+            );
+            renderProducts(filteredProducts);
+        };
+        
+        // Adiciona event listeners para a pesquisa
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Impede o envio do formulário padrão
+                performSearch();
+            }
+        });
 
+        // Funções para navegação entre as seções (simplificada)
+        const showPage = (pageId) => {
+            // Apenas para manter o link de Início funcional,
+            // já que as outras páginas não são mais SPA
+        };
+
+        // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
         const backdrop = document.getElementById('backdrop');
 
-        const openMobileMenu = () => {
+        mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.add('open');
             backdrop.classList.add('open');
-        };
+        });
 
-        const closeMobileMenu = () => {
+        closeMobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.remove('open');
             backdrop.classList.remove('open');
-        };
+        });
 
-        mobileMenuButton.addEventListener('click', openMobileMenu);
-        closeMobileMenuButton.addEventListener('click', closeMobileMenu);
-        backdrop.addEventListener('click', closeMobileMenu);
-        
-        // Inicializa a aplicação
+        backdrop.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            backdrop.classList.remove('open');
+        });
+
+        // Renderiza os produtos e atualiza o contador do carrinho ao carregar a página
         window.onload = () => {
-            renderProducts();
+            renderProducts(products); // Renderiza todos os produtos inicialmente
             updateCartItemCount();
-            showPage('home');
         };
     </script>
 </body>
