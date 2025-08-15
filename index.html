@@ -27,6 +27,9 @@
         .text-purple-500-custom {
             color: #a855f7; /* Um roxo médio para destaques */
         }
+        .bg-purple-800-custom {
+            background-color: #581c87; /* Roxo para inputs e áreas de texto */
+        }
 
         /* Estilo para a imagem de fundo do cabeçalho */
         .header-bg {
@@ -136,8 +139,6 @@
     <!-- Seção de Produtos (Página Inicial) -->
     <div id="home-section" class="page-section active">
         <header class="header-bg relative h-64 md:h-96 flex flex-col items-center justify-center p-4">
-            <!-- Overlay adicionado com opacidade reduzida -->
-           
             <div class="relative z-20 text-center text-white">
                 <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
@@ -235,7 +236,7 @@
         };
 
         /**
-         * Renderiza os produtos na página a partir de um array.
+         * Renderiza os produtos na página a partir de um array, incluindo o botão de compra.
          * @param {Array} filteredProducts O array de produtos a ser renderizado.
          */
         const renderProducts = (filteredProducts) => {
@@ -247,17 +248,31 @@
             }
 
             filteredProducts.forEach(product => {
-                const productCard = document.createElement('a');
-                productCard.href = `product.html?id=${product.id}`;
-                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden', 'block');
+                // Cria um elemento div para o card do produto
+                const productCard = document.createElement('div');
+                productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden', 'block', 'flex', 'flex-col');
+                
+                // Insere o HTML do card com o botão "Comprar"
                 productCard.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover object-center rounded-t-xl">
-                    <div class="p-6 text-center">
-                        <h3 class="text-xl font-semibold mb-2 text-gray-900">${product.name}</h3>
-                        <p class="text-2xl font-bold text-purple-700-custom">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
+                    <a href="product.html?id=${product.id}" class="block">
+                        <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover object-center rounded-t-xl">
+                    </a>
+                    <div class="p-6 text-center flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2 text-gray-900">${product.name}</h3>
+                            <p class="text-2xl font-bold text-purple-700-custom">R$ ${product.price.toFixed(2).replace('.', ',')}</p>
+                        </div>
+                        <!-- Botão "Comprar" com classe para identificar no JavaScript -->
+                        <button class="add-to-cart-btn bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg mt-4 hover:bg-purple-800 transition-colors duration-300 w-full">Comprar</button>
                     </div>
                 `;
                 productsContainer.appendChild(productCard);
+
+                // Adiciona o event listener ao botão de compra
+                const buyButton = productCard.querySelector('.add-to-cart-btn');
+                buyButton.addEventListener('click', () => {
+                    addToCart(product.id);
+                });
             });
         };
 
@@ -281,12 +296,6 @@
                 performSearch();
             }
         });
-
-        // Funções para navegação entre as seções (simplificada)
-        const showPage = (pageId) => {
-            // Apenas para manter o link de Início funcional,
-            // já que as outras páginas não são mais SPA
-        };
 
         // Mobile menu functionality
         const mobileMenuButton = document.getElementById('mobile-menu-button');
