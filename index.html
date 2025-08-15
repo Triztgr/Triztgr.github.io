@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artefatos Geek</title>
-    <!-- Inclui o Tailwind CSS para estilização -->
+  
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Define a fonte e cores personalizadas para o tema roxo */
+
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
 
-        /* Classes personalizadas para cores roxas */
         .bg-purple-900-custom {
-            background-color: #3b0764; /* Um roxo bem escuro */
+            background-color: #3b0764; 
         }
         .bg-purple-700-custom {
-            background-color: #6b21a8; /* Um roxo mais claro para botões, etc. */
+            background-color: #6b21a8; 
         }
         .text-purple-300-custom {
-            color: #d8b4fe; /* Um roxo claro para o texto */
+            color: #d8b4fe; 
         }
         .text-purple-500-custom {
-            color: #a855f7; /* Um roxo médio para destaques */
+            color: #a855f7; 
         }
         .bg-purple-800-custom {
-            background-color: #581c87; /* Roxo para inputs e áreas de texto */
+            background-color: #581c87; 
         }
 
-        /* Estilo para a imagem de fundo do cabeçalho. Usando uma imagem de placeholder para compatibilidade. */
+        
         .header-bg {
             background-image: url('imagens/wall.png');
             background-size: cover;
@@ -39,12 +38,12 @@
             background-repeat: no-repeat;
         }
         
-        /* Estilo para esconder a seção de produtos, se necessário (mas não usada agora) */
+       
         .page-section {
-            display: block; /* Mantém a seção de produtos visível */
+            display: block; 
         }
 
-        /* Mobile menu styles */
+        
         .mobile-menu {
             position: fixed;
             top: 0;
@@ -76,7 +75,7 @@
             display: block;
         }
 
-        /* Estilo para o pop-up de confirmação (toast) */
+        
         .toast-message {
             position: fixed;
             bottom: 2rem;
@@ -98,11 +97,11 @@
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-   <!-- Navbar (Menu de Navegação) -->
+  
    <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
     <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
         
-        <!-- Search bar -->
+        
         <div class="flex items-center w-full md:w-auto">
             <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="w-full md:w-72 px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900">
             <button id="search-button" class="bg-purple-700-custom text-white py-2 px-4 rounded-r-full hover:bg-purple-800-custom transition-colors duration-200">
@@ -110,7 +109,7 @@
             </button>
         </div>
 
-        <!-- Mobile Menu Button and Cart Button -->
+       
         <div class="flex items-center space-x-4 md:hidden">
             <a href="carrinho.html" class="text-white hover:text-purple-300-custom transition-colors duration-200 relative">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -119,14 +118,14 @@
                 <span id="cart-item-count" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
             </a>
             <button id="mobile-menu-button" class="text-white hover:text-purple-300-custom transition-colors duration-200">
-                <!-- Hamburger icon -->
+                
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
         </div>
 
-        <!-- Desktop Navigation Links -->
+        
         <ul class="hidden md:flex items-center space-x-6">
             <li><a href="#" class="hover:text-purple-300-custom transition-colors duration-200" onclick="showPage('home')">Início</a></li>
             <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
@@ -138,7 +137,7 @@
     </div>
 </nav>
 
-    <!-- Mobile Menu (oculto por padrão) -->
+    
     <div id="mobile-menu" class="mobile-menu p-4 text-white">
         <div class="flex justify-end mb-4">
             <button id="close-mobile-menu-button" class="text-white hover:text-purple-300-custom">
@@ -154,19 +153,19 @@
         </ul>
     </div>
 
-    <!-- Backdrop para o menu mobile -->
+    
     <div id="backdrop" class="backdrop"></div>
 
-    <!-- Mensagem de confirmação de produto adicionado -->
+    
     <div id="toast-message" class="toast-message hidden">
         Produto adicionado ao carrinho!
     </div>
 
-    <!-- Seção de Produtos (Página Inicial) -->
+    
     <div id="home-section" class="page-section active">
         <header class="header-bg relative h-64 md:h-96 flex flex-col items-center justify-center p-4">
             <div class="relative z-20 text-center text-white">
-                <!-- Usando uma imagem de placeholder para o logo -->
+               
                 <img src="imagens/logo.png" alt="Logo da Artefatos Geek" class="h-24 md:h-40 mx-auto rounded-lg">
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 drop-shadow-md">Artefatos Geek</h1>
                 <p class="text-xl md:text-2xl mt-2 drop-shadow-md">Seu universo de tecnologia e inovação</p>
@@ -176,17 +175,17 @@
         <main class="container mx-auto py-12 px-4">
             <h2 class="text-4xl font-bold text-center mb-8 text-purple-700-custom">Nossos Produtos</h2>
             
-            <!-- Grid de produtos responsivo -->
+            
             <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Os cards de produtos serão inseridos aqui via JavaScript -->
+                
             </div>
         </main>
     </div>
 
-    <!-- Rodapé (Footer) com seções "Sobre Nós" e "Contato" incorporadas -->
+    
     <footer class="bg-purple-900-custom text-purple-300-custom py-12">
         <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 text-center md:text-left">
-            <!-- Seção "Sobre Nós" -->
+            
             <div>
                 <h3 class="text-2xl font-bold mb-4">Sobre Nós</h3>
                 <p class="text-gray-300 leading-relaxed">
@@ -194,13 +193,13 @@
                 </p>
             </div>
             
-            <!-- Seção "Contato" -->
+            
             <div>
                 <h3 class="text-2xl font-bold mb-4">Fale Conosco</h3>
                 <p class="text-gray-300 leading-relaxed">
                     Tem alguma dúvida, sugestão ou precisa de suporte? <br>Entre em contato conosco através do formulário abaixo.
                 </p>
-                <!-- Formulário de contato simplificado no rodapé -->
+                
                 <form class="mt-4">
                     <input type="text" placeholder="Seu Nome" class="w-full bg-purple-800-custom border-0 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400">
                     <input type="email" placeholder="Seu Email" class="w-full bg-purple-800-custom border-0 rounded-lg p-3 mb-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white placeholder-gray-400">
@@ -220,7 +219,7 @@
     <script type="module">
         import { products } from './products.js';
 
-        // Elementos do DOM
+        
         const productsContainer = document.getElementById('products-container');
         const cartItemCountSpanMobile = document.getElementById('cart-item-count');
         const cartItemCountSpanDesktop = document.getElementById('cart-item-count-desktop');
@@ -228,10 +227,7 @@
         const searchButton = document.getElementById('search-button');
         const toastMessage = document.getElementById('toast-message');
 
-        /**
-         * Adiciona um produto ao carrinho no localStorage.
-         * @param {string} productId O ID do produto a ser adicionado.
-         */
+        
         const addToCart = (productId) => {
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             const product = products.find(p => p.id === productId);
@@ -245,25 +241,21 @@
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
                 updateCartItemCount();
-                showToast(); // Exibe a mensagem de confirmação
+                showToast(); 
             }
         };
 
-        /**
-         * Exibe uma mensagem de confirmação temporária.
-         */
+       
         const showToast = () => {
             toastMessage.classList.remove('hidden');
             toastMessage.classList.add('show');
             setTimeout(() => {
                 toastMessage.classList.remove('show');
                 toastMessage.classList.add('hidden');
-            }, 3000); // Esconde a mensagem após 3 segundos
+            }, 3000); 
         };
 
-        /**
-         * Atualiza o contador de itens na barra de navegação.
-         */
+      
         const updateCartItemCount = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -279,24 +271,20 @@
             }
         };
 
-        /**
-         * Renderiza os produtos na página a partir de um array, incluindo o botão de compra.
-         * @param {Array} filteredProducts O array de produtos a ser renderizado.
-         */
+      
         const renderProducts = (filteredProducts) => {
             productsContainer.innerHTML = '';
-            // Se não houver produtos filtrados, exibe uma mensagem
+          
             if (filteredProducts.length === 0) {
                 productsContainer.innerHTML = '<p class="text-center text-gray-500 col-span-full">Nenhum produto encontrado.</p>';
                 return;
             }
 
             filteredProducts.forEach(product => {
-                // Cria um elemento div para o card do produto
+               
                 const productCard = document.createElement('div');
                 productCard.classList.add('bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-shadow', 'duration-300', 'overflow-hidden', 'block', 'flex', 'flex-col');
                 
-                // Insere o HTML do card com o botão "Comprar"
                 productCard.innerHTML = `
                     <a href="product.html?id=${product.id}" class="block">
                         <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover object-center rounded-t-xl">
@@ -312,7 +300,7 @@
                 `;
                 productsContainer.appendChild(productCard);
 
-                // Adiciona o event listener ao botão de compra
+                
                 const buyButton = productCard.querySelector('.add-to-cart-btn');
                 buyButton.addEventListener('click', () => {
                     addToCart(product.id);
@@ -320,9 +308,7 @@
             });
         };
 
-        /**
-         * Filtra os produtos com base na pesquisa e renderiza o resultado.
-         */
+      
         const performSearch = () => {
             const query = searchInput.value.toLowerCase();
             const filteredProducts = products.filter(product =>
@@ -332,16 +318,16 @@
             renderProducts(filteredProducts);
         };
         
-        // Adiciona event listeners para a pesquisa
+        
         searchButton.addEventListener('click', performSearch);
         searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Impede o envio do formulário padrão
+                event.preventDefault(); 
                 performSearch();
             }
         });
 
-        // Mobile menu functionality
+        
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const closeMobileMenuButton = document.getElementById('close-mobile-menu-button');
@@ -362,9 +348,9 @@
             backdrop.classList.remove('open');
         });
 
-        // Renderiza os produtos e atualiza o contador do carrinho ao carregar a página
+        
         window.onload = () => {
-            renderProducts(products); // Renderiza todos os produtos inicialmente
+            renderProducts(products); 
             updateCartItemCount();
         };
     </script>

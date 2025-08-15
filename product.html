@@ -4,39 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="product-title">Produto - Artefatos Geek</title>
+    
     <!-- Inclui o Tailwind CSS para estilização -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Define a fonte e cores personalizadas para o tema roxo */
+        /* Importa a fonte 'Inter' para o projeto */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
 
-        /* Classes personalizadas para cores roxas */
-        .bg-purple-900-custom {
-            background-color: #3b0764; /* Um roxo bem escuro */
+        /* Classes personalizadas para o tema de cores roxas */
+        .bg-purple-900-custom { background-color: #3b0764; }
+        .bg-purple-700-custom { background-color: #6b21a8; }
+        .text-purple-300-custom { color: #d8b4fe; }
+        .text-purple-500-custom { color: #a855f7; }
+        .bg-purple-800-custom { background-color: #581c87; }
+        
+        /* Estilo para o pop-up de confirmação (toast) */
+        .toast-message {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #10b981; /* Verde esmeralda para sucesso */
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1000;
         }
-        .bg-purple-700-custom {
-            background-color: #6b21a8; /* Um roxo mais claro para botões, etc. */
-        }
-        .text-purple-300-custom {
-            color: #d8b4fe; /* Um roxo claro para o texto */
-        }
-        .text-purple-500-custom {
-            color: #a855f7; /* Um roxo médio para destaques */
+        .toast-message.show {
+            opacity: 1;
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <!-- Navbar (Menu de Navegação) -->
+    <!-- Navbar -->
     <nav class="bg-purple-900-custom text-white p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-6">
             <a href="index.html" class="text-2xl font-bold text-purple-300-custom">Artefatos Geek</a>
-            
-            <!-- Search bar -->
+    
+            <!-- Barra de Pesquisa -->
             <div class="flex items-center w-full md:w-auto">
                 <input type="text" id="search-input" placeholder="Pesquisar produtos..." class="w-full md:w-72 px-4 py-2 rounded-l-full focus:outline-none focus:ring-2 focus:ring-purple-500 text-gray-900">
                 <button id="search-button" class="bg-purple-700-custom text-white py-2 px-4 rounded-r-full hover:bg-purple-800 transition-colors duration-200">
@@ -44,38 +57,46 @@
                 </button>
             </div>
 
-            <!-- Desktop Navigation Links -->
+            <!-- Links de Navegação -->
             <ul class="flex items-center space-x-6">
                 <li><a href="index.html" class="hover:text-purple-300-custom transition-colors duration-200">Início</a></li>
                 <li><a href="login.html" class="hover:text-purple-300-custom transition-colors duration-200">Login</a></li>
-                <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200">Carrinho</a></li>
+                <li><a href="carrinho.html" class="hover:text-purple-300-custom transition-colors duration-200 relative">
+                    Carrinho
+                    <span id="cart-item-count-desktop" class="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-red-500 text-white rounded-full px-2 py-0.5 text-xs hidden">0</span>
+                </a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Conteúdo da Página do Produto -->
+    <!-- Mensagem de confirmação de produto adicionado -->
+    <div id="toast-message" class="toast-message hidden">
+        Produto adicionado ao carrinho!
+    </div>
+
     <main class="container mx-auto py-12 px-4">
         <div id="product-detail-container" class="bg-white rounded-xl shadow-lg p-8 flex flex-col md:flex-row items-center md:items-start space-y-8 md:space-y-0 md:space-x-12">
-            <!-- Imagem do produto -->
+
+            <!-- Imagem do Produto -->
             <div class="md:w-1/2 flex justify-center">
                 <img id="product-image" src="" alt="Imagem do produto" class="w-full max-w-sm rounded-xl shadow-md">
             </div>
 
-            <!-- Detalhes do produto -->
+            <!-- Detalhes do Produto -->
             <div class="md:w-1/2 text-center md:text-left">
                 <h1 id="product-name" class="text-4xl font-bold mb-4 text-purple-700-custom"></h1>
                 <p id="product-description" class="text-gray-700 mb-6"></p>
                 <p id="product-price" class="text-3xl font-bold text-gray-900 mb-6"></p>
 
-                <!-- Botão de adicionar ao carrinho -->
-                <button id="add-to-cart-btn" class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800 transition-colors duration-300">
+                <!-- Botão Adicionar ao Carrinho -->
+                <button id="add-to-cart-btn" class="bg-purple-700-custom text-white font-bold py-3 px-8 rounded-lg hover:bg-purple-800-custom transition-colors duration-300">
                     Adicionar ao Carrinho
                 </button>
             </div>
         </div>
     </main>
 
-    <!-- Rodapé (Footer) -->
+    <!-- Rodapé -->
     <footer class="bg-purple-900-custom text-purple-300-custom py-6 mt-12">
         <div class="container mx-auto text-center">
             <p>&copy; 2024 Artefatos Geek. Todos os direitos reservados.</p>
@@ -94,6 +115,8 @@
         const addToCartBtn = document.getElementById('add-to-cart-btn');
         const searchInput = document.getElementById('search-input');
         const searchButton = document.getElementById('search-button');
+        const toastMessage = document.getElementById('toast-message');
+        const cartItemCountSpanDesktop = document.getElementById('cart-item-count-desktop');
 
         /**
          * Adiciona um produto ao carrinho no localStorage.
@@ -111,12 +134,40 @@
                     cart.push({ ...product, quantity: 1 });
                 }
                 localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartItemCount();
+                showToast(); // Exibe a mensagem de confirmação
             }
-            alert('Produto adicionado ao carrinho!');
         };
 
         /**
-         * Carrega os detalhes do produto com base no ID da URL.
+         * Exibe uma mensagem de confirmação temporária (toast).
+         */
+        const showToast = () => {
+            toastMessage.classList.remove('hidden');
+            toastMessage.classList.add('show');
+            setTimeout(() => {
+                toastMessage.classList.remove('show');
+                toastMessage.classList.add('hidden');
+            }, 3000); // Esconde a mensagem após 3 segundos
+        };
+
+        /**
+         * Atualiza o contador de itens na barra de navegação.
+         */
+        const updateCartItemCount = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                cartItemCountSpanDesktop.textContent = totalItems;
+                cartItemCountSpanDesktop.classList.remove('hidden');
+            } else {
+                cartItemCountSpanDesktop.classList.add('hidden');
+            }
+        };
+
+        /**
+         * Carrega e exibe os detalhes do produto com base no ID da URL.
          */
         const loadProductDetails = () => {
             const params = new URLSearchParams(window.location.search);
@@ -138,7 +189,7 @@
         };
 
         /**
-         * Redireciona para a página inicial com o termo de pesquisa.
+         * Redireciona para a página de pesquisa (index.html).
          */
         const redirectToSearchPage = () => {
             const query = searchInput.value;
@@ -147,7 +198,7 @@
             }
         };
 
-        // Adiciona event listeners para a pesquisa
+        // Adiciona os event listeners para a pesquisa
         searchButton.addEventListener('click', redirectToSearchPage);
         searchInput.addEventListener('keypress', (event) => {
             if (event.key === 'Enter') {
@@ -156,8 +207,11 @@
             }
         });
 
-        // Carrega os detalhes do produto ao carregar a página
-        window.onload = loadProductDetails;
+        // Executa as funções ao carregar a página
+        window.onload = () => {
+            loadProductDetails();
+            updateCartItemCount();
+        };
     </script>
 </body>
 </html>
